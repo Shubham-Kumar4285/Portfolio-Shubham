@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
 
 const Projects = () => {
   const { theme } = useTheme();
@@ -72,11 +73,13 @@ const Projects = () => {
                 <div className={`relative h-48 ${
                   theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'
                 }`}>
-                                    <img
-                        src={project.image} // Replace with your actual image path
-                        alt="Project"
-                        className="absolute inset-0 w-full h-full object-contain"
-                    />
+                                            <Image
+        src={project.image} // Make sure this is a valid URL or imported image
+        alt="Project"
+        className="absolute inset-0 w-full h-full object-contain"
+        fill // This replaces width and height when you use absolute positioning
+        style={{ objectFit: 'contain' }}
+        />
                   <div className="absolute inset-0 bg-blue-500/10" />
                 </div>
 

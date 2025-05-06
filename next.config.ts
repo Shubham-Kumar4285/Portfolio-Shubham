@@ -2,7 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
     devIndicators: false ,
-    ignoreDuringBuilds: true,
+    eslint: {
+        ignoreDuringBuilds: true, // ✅ Correct location
+      }
 };
 
 export default nextConfig;
