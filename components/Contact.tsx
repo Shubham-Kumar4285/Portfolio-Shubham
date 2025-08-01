@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { FiGithub, FiLinkedin, FiTwitter, FiSend } from 'react-icons/fi';
+import { useForm, ValidationError } from '@formspree/react';
 
 interface FormData {
   name: string;
@@ -58,14 +59,13 @@ const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-      // Replace with your actual API endpoint
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    const response = await fetch('https://formspree.io/f/xvgqqnlj', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
 
       if (!response.ok) {
         throw new Error('Failed to send message');
