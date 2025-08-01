@@ -2,7 +2,7 @@
 
 A modern, responsive portfolio website built with Next.js, React, TypeScript, and Tailwind CSS. Features smooth animations, dark/light theme switching, and a functional contact form.
 
-![Portfolio Preview](public/preview.png)
+![Portfolio Preview](public/preview.PNG)
 
 ## ✨ Features
 
