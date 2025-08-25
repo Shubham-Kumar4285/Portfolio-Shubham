@@ -16,7 +16,7 @@ A modern, responsive portfolio website built with Next.js, React, TypeScript, an
 
 ## 🚀 Demo
 
-**Live Site**: [your-portfolio.vercel.app](https://portfolio-shubham-seven.vercel.app/)
+**Live Site**: [Live Link](https://portfolio-shubham-seven.vercel.app/)
 
 ## 🛠️ Built With
 
@@ -40,3 +40,4 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository**
 2. git clone https://github.com/Shubham-Kumar4285/Portfolio-Shubham.git
 3. cd portfolio-website
+
