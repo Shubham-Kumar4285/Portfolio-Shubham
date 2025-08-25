@@ -520,7 +520,7 @@ export default function Home() {
             transition={{ duration: 1.2 }}
           >
             {/* HERO SECTION */}
-            <section id="home" className="h-screen flex items-center justify-center relative overflow-hidden">
+            <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 sm:pt-24 md:pt-20">
 
               {/* Enhanced glassmorphism overlay with theme variations */}
               <div className={`absolute inset-0 z-0 glass-effect transition-all duration-700 ${
