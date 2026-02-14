@@ -1,0 +1,304 @@
+/**
+ * Custom CSS for Cinematic 3D Hero Section
+ * Feature: cinematic-3d-hero
+ */
+
+/* ============================================================================
+   Text Stroke Styles
+   ============================================================================ */
+
+.solid-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  will-change: transform;
+}
+
+.outline-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke-width: var(--stroke-width, 3px);
+  -webkit-text-stroke-color: var(--stroke-color, rgba(255, 255, 255, 0.5));
+  text-stroke-width: var(--stroke-width, 3px);
+  text-stroke-color: var(--stroke-color, rgba(255, 255, 255, 0.5));
+  pointer-events: none; /* Critical: allows interaction with layers below */
+  text-transform: uppercase;
+  will-change: transform;
+}
+
+/* ============================================================================
+   Glassmorphic UI Styles
+   ============================================================================ */
+
+.glassmorphic {
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.glassmorphic-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.125);
+  padding: 1rem 2rem;
+}
+
+.glassmorphic-box {
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(12px)) {
+  .glassmorphic,
+  .glassmorphic-nav,
+  .glassmorphic-box {
+    background-color: rgba(17, 25, 40, 0.95);
+  }
+}
+
+/* ============================================================================
+   Navigation Link Styles
+   ============================================================================ */
+
+.nav-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s ease;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ============================================================================
+   Background Layer Styles
+   ============================================================================ */
+
+.background-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.background-image {
+  width: 110%; /* Slight overflow for parallax movement */
+  height: 110%;
+  object-fit: cover;
+  transform: translate(-5%, -5%); /* Center the overflow */
+  will-change: transform;
+}
+
+/* ============================================================================
+   Film Grain Overlay
+   ============================================================================ */
+
+.film-grain-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/textures/grain.png');
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: grain-animation 0.5s steps(1) infinite;
+}
+
+@keyframes grain-animation {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -5%); }
+  20% { transform: translate(-10%, 5%); }
+  30% { transform: translate(5%, -10%); }
+  40% { transform: translate(-5%, 15%); }
+  50% { transform: translate(-10%, 5%); }
+  60% { transform: translate(15%, 0); }
+  70% { transform: translate(0, 10%); }
+  80% { transform: translate(-15%, 0); }
+  90% { transform: translate(10%, 5%); }
+}
+
+/* ============================================================================
+   Custom Cursor Styles
+   ============================================================================ */
+
+.custom-cursor {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+body.custom-cursor-active {
+  cursor: none; /* Hide default cursor */
+}
+
+/* Restore default cursor on mobile */
+@media (max-width: 768px) {
+  .custom-cursor {
+    display: none;
+  }
+  
+  body.custom-cursor-active {
+    cursor: auto;
+  }
+}
+
+/* ============================================================================
+   Hero Section Container
+   ============================================================================ */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  contain: layout style paint; /* CSS containment for performance */
+}
+
+/* ============================================================================
+   Subject Layer Styles
+   ============================================================================ */
+
+.subject-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 7;
+  will-change: transform;
+}
+
+/* ============================================================================
+   Responsive Styles
+   ============================================================================ */
+
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+  .solid-text,
+  .outline-text {
+    font-size: clamp(2rem, 10vw, 4rem);
+  }
+  
+  .glassmorphic-nav {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .solid-text,
+  .outline-text {
+    font-size: clamp(3rem, 12vw, 8rem);
+  }
+}
+
+/* Desktop (>= 1024px) */
+@media (min-width: 1024px) {
+  .solid-text,
+  .outline-text {
+    font-size: clamp(4rem, 15vw, 20rem);
+  }
+}
+
+/* ============================================================================
+   Accessibility - Reduced Motion
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor,
+  .film-grain-overlay {
+    animation: none;
+  }
+  
+  .nav-link::after {
+    transition: none;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   Focus Indicators for Accessibility
+   ============================================================================ */
+
+*:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ============================================================================
+   Performance Optimizations
+   ============================================================================ */
+
+.parallax-layer {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* GPU acceleration hints */
+.gpu-accelerated {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
