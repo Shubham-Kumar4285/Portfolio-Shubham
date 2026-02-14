@@ -27,7 +27,7 @@ export const ParallaxContainer: React.FC<ParallaxContainerProps> = ({
         if (!React.isValidElement(child)) return child;
 
         // Assign refs based on component type/className
-        const className = child.props.className || '';
+        const className = (child.props as any).className || '';
         
         if (className.includes('background-layer')) {
           return React.cloneElement(child, { ref: backgroundRef } as any);

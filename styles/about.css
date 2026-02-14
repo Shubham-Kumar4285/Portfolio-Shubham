@@ -1,0 +1,57 @@
+/* About Section Performance Optimizations */
+
+/* GPU acceleration for smooth animations */
+.about-section {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Smooth skill card animations */
+.skill-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimized backdrop blur */
+.optimized-blur {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Prevent layout shift during image load */
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-container::before {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Performance optimization for mobile */
+@media (max-width: 768px) {
+  .optimized-blur {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .skill-card {
+    border-width: 2px;
+  }
+}

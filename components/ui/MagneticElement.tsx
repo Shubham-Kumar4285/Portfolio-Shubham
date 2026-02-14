@@ -98,3 +98,5 @@ export const MagneticElement: React.FC<MagneticElementProps> = ({
     </div>
   );
 };
+
+export default MagneticElement;

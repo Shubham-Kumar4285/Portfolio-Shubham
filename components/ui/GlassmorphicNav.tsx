@@ -1,7 +1,10 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { MagneticButton } from './MagneticButton';
+import { FiSun, FiMoon } from 'react-icons/fi';
+import { useTheme } from 'next-themes';
 
 interface NavLink {
   label: string;
@@ -38,13 +41,16 @@ export const GlassmorphicNav: React.FC<GlassmorphicNavProps> = ({
   logo,
   links,
   ctaButton,
-  theme = 'dark',
+  theme: themeProp = 'dark',
 }) => {
-  const bgColor = theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(17, 25, 40, 0.75)';
-  const borderColor = theme === 'light' ? 'rgba(102, 126, 234, 0.2)' : 'rgba(255, 255, 255, 0.125)';
-  const textColor = theme === 'light' ? '#1f2937' : '#ffffff';
-  const textHoverColor = theme === 'light' ? '#111827' : '#ffffff';
-  const textOpacity = theme === 'light' ? 0.7 : 0.8;
+  const { theme, setTheme } = useTheme();
+  const currentTheme = theme || themeProp;
+  
+  const bgColor = currentTheme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(17, 25, 40, 0.75)';
+  const borderColor = currentTheme === 'light' ? 'rgba(102, 126, 234, 0.2)' : 'rgba(255, 255, 255, 0.125)';
+  const textColor = currentTheme === 'light' ? '#1f2937' : '#ffffff';
+  const textHoverColor = currentTheme === 'light' ? '#111827' : '#ffffff';
+  const textOpacity = currentTheme === 'light' ? 0.7 : 0.8;
 
   return (
     <nav
@@ -60,16 +66,16 @@ export const GlassmorphicNav: React.FC<GlassmorphicNavProps> = ({
       <div className="max-w-[1920px] mx-auto flex items-center justify-between">
         {/* Logo - Top Left */}
         <div className="flex-shrink-0">
-          {typeof logo === 'string' ? (
-            <span className="text-base md:text-xl font-bold" style={{ 
-              color: textColor,
-              transition: 'color 0.5s ease-in-out',
-            }}>
-              {logo}
-            </span>
-          ) : (
-            logo
-          )}
+          <a href="#home" className="block">
+            <Image
+              src="/favicon.png"
+              alt="Logo"
+              width={40}
+              height={40}
+              className="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 hover:scale-110"
+              priority
+            />
+          </a>
         </div>
 
         {/* Navigation Links - Center - Hidden on mobile */}
@@ -82,7 +88,7 @@ export const GlassmorphicNav: React.FC<GlassmorphicNavProps> = ({
               rel={link.external ? 'noopener noreferrer' : undefined}
               className="nav-link relative transition-colors duration-300 text-sm lg:text-base"
               style={{
-                color: `rgba(${theme === 'light' ? '31, 41, 55' : '255, 255, 255'}, ${textOpacity})`,
+                color: `rgba(${currentTheme === 'light' ? '31, 41, 55' : '255, 255, 255'}, ${textOpacity})`,
                 transition: 'color 0.5s ease-in-out',
               }}
             >
@@ -92,8 +98,26 @@ export const GlassmorphicNav: React.FC<GlassmorphicNavProps> = ({
           ))}
         </div>
 
-        {/* CTA Button - Top Right */}
-        <div className="flex-shrink-0">
+        {/* Right side: Theme Toggle + CTA Button */}
+        <div className="flex items-center gap-3">
+          {/* Theme Toggle Button */}
+          <button
+            onClick={() => setTheme(currentTheme === 'dark' ? 'light' : 'dark')}
+            className="p-2 rounded-lg transition-all duration-300"
+            style={{
+              backgroundColor: currentTheme === 'light' ? 'rgba(102, 126, 234, 0.1)' : 'rgba(255, 255, 255, 0.1)',
+              color: textColor,
+            }}
+            aria-label="Toggle theme"
+          >
+            {currentTheme === 'dark' ? (
+              <FiSun className="w-5 h-5" />
+            ) : (
+              <FiMoon className="w-5 h-5" />
+            )}
+          </button>
+
+          {/* CTA Button */}
           <MagneticButton
             magneticRadius={80}
             magneticStrength={0.25}

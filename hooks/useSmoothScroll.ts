@@ -6,7 +6,6 @@ interface SmoothScrollConfig {
   duration?: number;
   easing?: (t: number) => number;
   smoothWheel?: boolean;
-  smoothTouch?: boolean;
 }
 
 /**
@@ -31,7 +30,6 @@ export const useSmoothScroll = (config: SmoothScrollConfig = {}) => {
           duration: config.duration || 1.2,
           easing: config.easing || ((t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))),
           smoothWheel: config.smoothWheel !== false,
-          smoothTouch: config.smoothTouch || false,
         });
 
         // RAF loop for Lenis
@@ -56,5 +54,5 @@ export const useSmoothScroll = (config: SmoothScrollConfig = {}) => {
         lenis.destroy();
       }
     };
-  }, [config.duration, config.easing, config.smoothWheel, config.smoothTouch]);
+  }, [config.duration, config.easing, config.smoothWheel]);
 };

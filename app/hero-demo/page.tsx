@@ -18,13 +18,12 @@ export default function HeroDemoPage() {
   useSmoothScroll({
     duration: 1.2,
     smoothWheel: true,
-    smoothTouch: false,
   });
 
   // Sample data for the hero section
   const heroData = {
-    backgroundImage: '/wallpapers/universal-wallpaper.jpg',
-    subjectImage: '/images/toji_2.png',
+    backgroundImage: '/hero/background/hero-bg.jpg',
+    subjectImage: '/hero/subject/hero-subject.png',
     heroText: 'SHUBHAM',
     tagline: 'Full-Stack Developer & Creative Technologist',
     description: 'Crafting seamless digital experiences with modern web technologies. Specializing in React, Next.js, and innovative UI/UX design.',

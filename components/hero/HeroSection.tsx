@@ -37,7 +37,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const solidTextRef = useRef<HTMLDivElement>(null);
   const subjectRef = useRef<HTMLDivElement>(null);
   const outlineTextRef = useRef<HTMLDivElement>(null);
-  const navRef = useRef<HTMLDivElement>(null);
 
   // Detect mobile viewport
   useEffect(() => {
@@ -79,7 +78,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         if (solidTextRef.current) solidTextRef.current.style.opacity = '1';
         if (subjectRef.current) subjectRef.current.style.opacity = '1';
         if (outlineTextRef.current) outlineTextRef.current.style.opacity = '1';
-        if (navRef.current) navRef.current.style.opacity = '1';
       } else {
         // Normal entrance animations
         if (backgroundRef.current) {
@@ -110,14 +108,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             { y: 100, opacity: 0 },
             { y: 0, opacity: 1, duration: 0.8 },
             '-=0.7'
-          );
-        }
-        
-        if (navRef.current) {
-          tl.fromTo(navRef.current,
-            { y: -50, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.6 },
-            '-=0.8'
           );
         }
       }
@@ -217,14 +207,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       />
 
       {/* Glassmorphic Navigation */}
-      <div ref={navRef} style={{ position: 'relative', zIndex: 20 }}>
-        <GlassmorphicNav
-          logo={logo}
-          links={navLinks}
-          ctaButton={ctaButton}
-          theme={theme}
-        />
-      </div>
+      <GlassmorphicNav
+        logo={logo}
+        links={navLinks}
+        ctaButton={ctaButton}
+        theme={theme}
+      />
 
       {/* Hero Section Container */}
       <section 
