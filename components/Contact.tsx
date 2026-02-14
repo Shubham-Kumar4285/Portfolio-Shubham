@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { FiGithub, FiLinkedin, FiTwitter, FiSend } from 'react-icons/fi';
 import { useForm, ValidationError } from '@formspree/react';
+import portfolioData from '../data/portfolio.json';
 
 interface FormData {
   name: string;
@@ -21,11 +22,17 @@ const Contact = () => {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
-  const socialLinks = [
-    { name: 'GitHub', url: 'https://github.com/Shubham-Kumar4285', icon: FiGithub },
-    { name: 'LinkedIn', url: 'https://linkedin.com/in/shubham-kumar-98aaa7255/', icon: FiLinkedin },
-    { name: 'Twitter', url: 'https://x.com/Shubham0056572?t=iyy24ma8FN4c3-Tp5nAF7w&s=09', icon: FiTwitter },
-  ];
+  // Icon mapping
+  const iconMap: { [key: string]: any } = {
+    FiGithub,
+    FiLinkedin,
+    FiTwitter
+  };
+
+  const socialLinks = portfolioData.contact.socialLinks.map(link => ({
+    ...link,
+    icon: iconMap[link.icon]
+  }));
 
   const validateForm = () => {
     const newErrors: Partial<FormData> = {};
@@ -59,7 +66,7 @@ const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-    const response = await fetch('https://formspree.io/f/xvgqqnlj', {
+    const response = await fetch(`https://formspree.io/f/${portfolioData.contact.formspreeId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -223,7 +230,7 @@ const Contact = () => {
                 <p className={`mb-6 ${
                   theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
                 }`}>
-                  Feel free to reach out for collaborations or just a friendly hello!
+                  {portfolioData.contact.description}
                 </p>
 
                 <div className="space-y-4">
@@ -255,7 +262,7 @@ const Contact = () => {
                   theme === 'dark' ? 'text-white' : 'text-gray-800'
                 }`}>Location</h3>
                 <p className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>
-                  Ghaziabad, India
+                  {portfolioData.personal.location}
                 </p>
               </div>
             </motion.div>

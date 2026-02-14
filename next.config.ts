@@ -1,35 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-    devIndicators: false ,
+    devIndicators: false,
     eslint: {
-        ignoreDuringBuilds: true, // ✅ Correct location
-      }
-    ,
-    experimental: {
-
-    optimizeCss: false
-  },
-  images: {
-        unoptimized: true, // Disables all image optimizations globally
+        ignoreDuringBuilds: true,
     },
-assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
+    experimental: {
+        optimizeCss: false
+    },
+    images: {
+        unoptimized: false, // Enable image optimization
+        formats: ['image/webp'], // Use WebP for better compression
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    },
+    assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
     trailingSlash: false,
-    // Disable webpack optimization for images
-    webpack: (config) => {
-        config.module.rules.push({
-            test: /\.(png|jpe?g|gif|svg)$/,
-            use: {
-                loader: 'file-loader',
-                options: {
-                    publicPath: '/_next/static/images/',
-                    outputPath: 'static/images/',
-                    limit: false, // Disable optimization
-                }
-            }
-        });
-        return config;
-    }
 };
 
 export default nextConfig;

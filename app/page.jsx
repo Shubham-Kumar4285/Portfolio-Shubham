@@ -7,6 +7,7 @@ import Projects from '../components/Projects';
 import Contact from '../components/Contact';
 //import ThemeToggle from '../components/ThemeToggle';
 import { useTheme } from 'next-themes';
+import portfolioData from '../data/portfolio.json';
 
 // Animated Loading Screen Component
 const LoadingScreen = ({ theme }) => (
@@ -108,10 +109,10 @@ const TypewriterHero = ({ text, speed = 120 }) => {
   );
 };
 
-// Enhanced Floating Particles
+// Optimized Floating Particles - Reduced count and removed backdrop-blur
 const FloatingParticles = ({ theme }) => {
   const particles = useMemo(() =>
-    Array.from({ length: 25 }, (_, i) => ({
+    Array.from({ length: 8 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -126,16 +127,17 @@ const FloatingParticles = ({ theme }) => {
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className={`absolute rounded-full backdrop-blur-sm ${
+          className={`absolute rounded-full ${
             theme === 'dark'
-              ? 'bg-gradient-to-br from-blue-400/20 to-purple-400/20 shadow-lg shadow-blue-500/20'
-              : 'bg-gradient-to-br from-white/50 to-blue-200/40 shadow-lg shadow-blue-300/30'
+              ? 'bg-gradient-to-br from-blue-400/20 to-purple-400/20'
+              : 'bg-gradient-to-br from-white/50 to-blue-200/40'
           }`}
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,
             width: `${particle.size}px`,
             height: `${particle.size}px`,
+            willChange: 'transform, opacity',
           }}
           animate={{
             y: [0, -150, 0],
@@ -204,66 +206,46 @@ const CTAButton = ({ href, children, theme, variant = 'primary' }) => (
   </motion.a>
 );
 
-// Magical Orbs Component
+// Optimized Magical Orbs - Reduced blur and simplified animations
 const MagicalOrbs = ({ theme }) => (
   <div className="absolute inset-0 z-0 overflow-hidden">
     {/* Large central orb */}
     <motion.div
       animate={{
-        scale: [1, 1.4, 1],
-        rotate: [0, 180, 360],
-        x: [0, 80, 0],
-        y: [0, -60, 0],
+        scale: [1, 1.2, 1],
+        x: [0, 50, 0],
+        y: [0, -40, 0],
       }}
       transition={{
-        duration: 25,
+        duration: 20,
         repeat: Infinity,
         ease: "easeInOut"
       }}
-      className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full filter blur-3xl ${
+      style={{ willChange: 'transform' }}
+      className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full filter blur-2xl ${
         theme === 'dark'
-          ? 'bg-gradient-to-br from-blue-500/30 via-cyan-400/25 to-purple-500/30'
-          : 'bg-gradient-to-br from-blue-300/40 via-cyan-300/35 to-purple-300/40'
+          ? 'bg-gradient-to-br from-blue-500/20 via-cyan-400/15 to-purple-500/20'
+          : 'bg-gradient-to-br from-blue-300/30 via-cyan-300/25 to-purple-300/30'
       }`}
     />
 
     {/* Secondary orb */}
     <motion.div
       animate={{
-        scale: [1.2, 1, 1.2],
-        rotate: [360, 180, 0],
-        x: [0, -100, 0],
-        y: [0, 80, 0],
+        scale: [1.1, 1, 1.1],
+        x: [0, -60, 0],
+        y: [0, 50, 0],
       }}
       transition={{
-        duration: 30,
+        duration: 25,
         repeat: Infinity,
         ease: "easeInOut"
       }}
-      className={`absolute top-1/3 right-1/4 w-80 h-80 rounded-full filter blur-3xl ${
+      style={{ willChange: 'transform' }}
+      className={`absolute top-1/3 right-1/4 w-80 h-80 rounded-full filter blur-2xl ${
         theme === 'dark'
-          ? 'bg-gradient-to-br from-purple-500/30 via-pink-400/25 to-red-500/30'
-          : 'bg-gradient-to-br from-purple-300/40 via-pink-300/35 to-red-300/40'
-      }`}
-    />
-
-    {/* Tertiary orb */}
-    <motion.div
-      animate={{
-        scale: [1, 1.6, 1],
-        rotate: [0, -200, -360],
-        x: [0, 60, 0],
-        y: [0, -40, 0],
-      }}
-      transition={{
-        duration: 35,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }}
-      className={`absolute bottom-1/4 left-1/3 w-72 h-72 rounded-full filter blur-3xl ${
-        theme === 'dark'
-          ? 'bg-gradient-to-br from-indigo-500/30 via-blue-400/25 to-cyan-500/30'
-          : 'bg-gradient-to-br from-indigo-300/40 via-blue-300/35 to-cyan-300/40'
+          ? 'bg-gradient-to-br from-purple-500/20 via-pink-400/15 to-red-500/20'
+          : 'bg-gradient-to-br from-purple-300/30 via-pink-300/25 to-red-300/30'
       }`}
     />
   </div>
@@ -291,16 +273,34 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    let rafId;
+    let lastX = 0;
+    let lastY = 0;
+
     const handleMouseMove = (event) => {
       const x = (event.clientX - window.innerWidth / 2) / window.innerWidth;
       const y = (event.clientY - window.innerHeight / 2) / window.innerHeight;
 
-      mouseX.set(x);
-      mouseY.set(y);
+      // Throttle updates using requestAnimationFrame
+      if (rafId) return;
+      
+      rafId = requestAnimationFrame(() => {
+        // Only update if movement is significant
+        if (Math.abs(x - lastX) > 0.01 || Math.abs(y - lastY) > 0.01) {
+          mouseX.set(x);
+          mouseY.set(y);
+          lastX = x;
+          lastY = y;
+        }
+        rafId = null;
+      });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [mouseX, mouseY]);
 
 //   useEffect(() => {
@@ -348,10 +348,11 @@ export default function Home() {
 //   }, []);
 
   useEffect(() => {
+  const sections = ['home', 'about', 'projects', 'contact'];
+  const threshold = window.innerHeight * 0.3;
+  
   const handleScroll = () => {
-    const sections = ['home', 'about', 'projects', 'contact'];
-    const threshold = window.innerHeight * 0.3;
-    let currentActiveSection = 'home'; // Default fallback
+    let currentActiveSection = 'home';
 
     // Check sections in reverse order (bottom to top)
     for (let i = sections.length - 1; i >= 0; i--) {
@@ -359,10 +360,9 @@ export default function Home() {
       const element = document.getElementById(section);
       if (element) {
         const rect = element.getBoundingClientRect();
-        // If the top of the section is above or at the threshold
         if (rect.top <= threshold) {
           currentActiveSection = section;
-          break; // Found the active section, stop checking
+          break;
         }
       }
     }
@@ -388,7 +388,8 @@ export default function Home() {
     }
   };
 
-  window.addEventListener('scroll', scrollListener);
+  // Use passive listener for better scroll performance
+  window.addEventListener('scroll', scrollListener, { passive: true });
   handleScroll();
 
   const timer = setTimeout(() => {
@@ -426,17 +427,16 @@ export default function Home() {
 
         @keyframes subtle-zoom {
           0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
+          50% { transform: scale(1.02); }
         }
 
-        /* Single universal background - replace with your chosen wallpaper */
         .bg-universal {
           background-image: url(/wallpapers/universal-wallpaper.jpg);
           background-size: cover;
           background-position: center;
           background-attachment: fixed;
           background-repeat: no-repeat;
-          animation: subtle-zoom 20s ease-in-out infinite;
+          animation: subtle-zoom 30s ease-in-out infinite;
         }
 
         .animate-float-gentle {
@@ -444,8 +444,8 @@ export default function Home() {
         }
 
         .animate-gradient-shift {
-          background-size: 400% 400%;
-          animation: gradient-shift 12s ease infinite;
+          background-size: 200% 200%;
+          animation: gradient-shift 8s ease infinite;
         }
 
         .animate-pulse-glow {
@@ -474,10 +474,10 @@ export default function Home() {
             : 'linear-gradient(45deg, #1D4ED8, #6D28D9)'};
         }
 
-        /* Glass effect utilities */
+        /* Optimized glass effect - reduced blur */
         .glass-effect {
-          backdrop-filter: blur(0px);
-          -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
         }
 
         body {
@@ -486,18 +486,8 @@ export default function Home() {
       `}</style>
 
       <main className="min-h-screen relative overflow-hidden">
-        {/* Single Universal 3D Background */}
-        <motion.div
-          className="fixed inset-0 z-[-2] bg-universal"
-          style={{
-            rotateX: rotateX,
-            rotateY: rotateY,
-            x: translateX,
-            y: translateY,
-            transformStyle: "preserve-3d",
-            perspective: "1000px"
-          }}
-        />
+        {/* Single Universal Background - Removed 3D transforms for better performance */}
+        <div className="fixed inset-0 z-[-2] bg-universal" />
 
         {/* Theme-based overlay for different moods */}
         <div className={`fixed inset-0 z-[-1] transition-all duration-700 ${
@@ -522,8 +512,8 @@ export default function Home() {
             {/* HERO SECTION */}
             <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 sm:pt-24 md:pt-20">
 
-              {/* Enhanced glassmorphism overlay with theme variations */}
-              <div className={`absolute inset-0 z-0 glass-effect transition-all duration-700 ${
+              {/* Simplified overlay - removed backdrop-blur for performance */}
+              <div className={`absolute inset-0 z-0 transition-all duration-700 ${
                 currentTheme === 'dark'
                   ? 'bg-gradient-to-br from-gray-900/60 via-gray-800/40 to-gray-900/60'
                   : 'bg-gradient-to-br from-white/50 via-gray-50/30 to-white/50'
@@ -592,7 +582,7 @@ export default function Home() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.8, duration: 1.2, type: "spring" }}
                     >
-                      <TypewriterHero text="Shubham Kumar" />
+                      <TypewriterHero text={portfolioData.personal.name} />
                     </motion.span>
                   </motion.h1>
 
@@ -605,15 +595,14 @@ export default function Home() {
                       currentTheme === 'dark' ? 'text-gray-300' : 'text-gray-700'
                     }`}
                   >
-                    Full Stack Developer crafting{' '}
+                    {portfolioData.personal.subtitle.split('seamless digital experiences')[0]}
                     <motion.span
                       className="font-semibold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent"
                       whileHover={{ scale: 1.05 }}
                     >
                       seamless digital experiences
                     </motion.span>
-                    <br />
-                    from stunning frontends to powerful backends.
+                    {portfolioData.personal.subtitle.split('seamless digital experiences')[1]}
                   </motion.p>
 
                   {/* Call-to-action buttons */}

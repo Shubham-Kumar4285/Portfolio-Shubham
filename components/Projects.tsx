@@ -2,43 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
+import portfolioData from '../data/portfolio.json';
 
 const Projects = () => {
   const { theme } = useTheme();
-  const projects = [
-    {
-      title: 'Reel Pick - Movie Recommender app',
-      description: 'Discover your next favorite film with personalized recommendations tailored to your tastes. Simply select the genres and movie types you love, and our system—powered by Natural Language Processing and Machine Learning—analyzes your preferences to suggest similar titles and hidden gems just for you.',
-      tags: ['Python', 'Machine Learning', 'Streamlit','Numpy','Pandas','NLP'],
-      image: '/r13.png', // Add your project image
-      link: 'https://github.com/Shubham-Kumar4285/ReelPick',
-    },
-    {
-      title: 'Recipe App',
-      description: 'A modern Recipe App built with Jetpack Compose that fetches meals from the MealDB API and displays them using a LazyVerticalGrid for smooth, efficient browsing. It leverages Retrofit for networking, Coil for image loading, and follows the MVVM architecture with Navigation Compose for seamless screen transitions.',
-      tags: ["Jetpack Compose",
-                "LazyVerticalGrid",
-                "Retrofit",
-                "Coil",
-                "MVVM Architecture",
-                "Navigation Compose",
-                "Kotlin",
-                "REST API Integration",
-                "Asynchronous Programming",
-  "State Management"],
-      image: '/r31.png', // Add your project image
-      link: 'https://github.com/Shubham-Kumar4285/RecipeApp',
-    },
-    {
-      title: 'VoyageX – AI Travel Planner App',
-      description: 'Developed a cross-platform travel app that generates AI-powered itineraries using the Gemini API. Integrated Firebase for user authentication and cloud storage, managing data in JSON format. Designed an intuitive, responsive UI/UX with features like trip creation, destination discovery, and itinerary review.',
-      tags: ['React-Native', 'API Integration', 'Material UI','Gemini','Expo',"RESTful API Integration",
-  "Cloud-based Data Management",
-  "Mobile Navigation & Routing","Firebase Authentication & Cloud Storage"],
-      image: '/r21.png', // Add your project image
-      link: 'https://github.com/Shubham-Kumar4285/VoyageX',
-    },
-  ];
+  const projects = portfolioData.projects;
 
 return (
   <section

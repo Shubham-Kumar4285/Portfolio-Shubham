@@ -36,6 +36,7 @@ import {
   BiCodeAlt,
   BiMobileAlt
 } from 'react-icons/bi';
+import portfolioData from '../data/portfolio.json';
 
 // Typewriter Effect Component
 const TypewriterText = ({ text, delay = 0 }) => {
@@ -67,11 +68,11 @@ const TypewriterText = ({ text, delay = 0 }) => {
   );
 };
 
-// Floating Elements Component
+// Optimized Floating Elements - Reduced count
 const FloatingElements = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {/* Floating geometric shapes */}
-    {[...Array(6)].map((_, i) => (
+    {/* Floating geometric shapes - reduced from 6 to 3 */}
+    {[...Array(3)].map((_, i) => (
       <motion.div
         key={i}
         className="absolute w-4 h-4 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-sm"
@@ -86,20 +87,12 @@ const FloatingElements = () => (
           ease: "linear",
         }}
         style={{
-          left: `${10 + i * 15}%`,
-          top: `${20 + i * 10}%`,
+          left: `${10 + i * 30}%`,
+          top: `${20 + i * 20}%`,
+          willChange: 'transform',
         }}
       />
     ))}
-
-    {/* Animated grid lines */}
-    <div className="absolute inset-0 opacity-10">
-      <div className="h-full w-full animate-pulse"
-           style={{
-             backgroundSize: '50px 50px',
-             backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)'
-           }} />
-    </div>
   </div>
 );
 
@@ -113,65 +106,24 @@ const About = () => {
     setMounted(true);
   }, []);
 
-  // Memoized skill categories for performance
-  const skillCategories = useMemo(() => [
-    {
-      name: 'Programming Languages',
-      skills: [
-        { name: 'Java', icon: FaJava, color: '#007396' },
-        { name: 'Kotlin', icon: FaCode, color: '#7F52FF' },
-        { name: 'C/C++', icon: BiCodeAlt, color: '#00599C' },
-        { name: 'Python', icon: FaPython, color: '#3776AB' },
-        { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
-      ]
-    },
-    {
-      name: 'Front-End',
-      skills: [
-        { name: 'HTML5', icon: SiHtml5, color: '#E34F26' },
-        { name: 'CSS3', icon: SiCss3, color: '#1572B6' },
-        { name: 'React', icon: SiReact, color: '#61DAFB' },
-        { name: 'Bootstrap', icon: SiBootstrap, color: '#7952B3' },
-      ]
-    },
-    {
-      name: 'Back-End',
-      skills: [
-        { name: 'Spring', icon: SiSpring, color: '#6DB33F' },
-        { name: 'Spring Boot', icon: SiSpringboot, color: '#6DB33F' },
-      ]
-    },
-    {
-      name: 'Development Tools',
-      skills: [
-        { name: 'Android Studio', icon: SiAndroidstudio, color: '#3DDC84' },
-        { name: 'Eclipse', icon: SiEclipseide, color: '#2C2255' },
-        { name: 'Visual Studio', icon: DiVisualstudio, color: '#5C2D91' },
-        { name: 'IntelliJ IDEA', icon: DiIntellij, color: '#000000' },
-        { name: 'Git', icon: SiGit, color: '#F05032' },
-      ]
-    },
-    {
-      name: 'Android Development',
-      skills: [
-        { name: 'Android SDK', icon: SiAndroid, color: '#3DDC84' },
-        { name: 'Jetpack Compose', icon: BiMobileAlt, color: '#4285F4' },
-        { name: 'XML', icon: SiAndroid, color: '#3DDC84' },
-        { name: 'Retrofit', icon: FaMobile, color: '#3DDC84' },
-        { name: 'React Native', icon: SiReact, color: '#61DAFB' },
-      ]
-    },
-    {
-      name: 'Data Science',
-      skills: [
-        { name: 'NumPy', icon: SiNumpy, color: '#013243' },
-        { name: 'Pandas', icon: SiPandas, color: '#150458' },
-        { name: 'Matplotlib', icon: FaChartLine, color: '#11557C' },
-        { name: 'Machine Learning', icon: SiTensorflow, color: '#FF6F00' },
-        { name: 'Computer Vision', icon: SiOpencv, color: '#5C3EE8' },
-      ]
-    }
-  ], []);
+  // Icon mapping object
+  const iconMap = {
+    FaJava, FaPython, FaCode, FaTools, FaMobile, FaDatabase, FaChartLine,
+    SiJavascript, SiHtml5, SiCss3, SiReact, SiBootstrap, SiSpring, SiSpringboot,
+    SiAndroidstudio, SiEclipseide, SiGit, SiAndroid, SiNumpy, SiPandas,
+    SiTensorflow, SiOpencv, DiVisualstudio, DiIntellij, BiCodeAlt, BiMobileAlt
+  };
+
+  // Memoized skill categories from JSON data
+  const skillCategories = useMemo(() => 
+    portfolioData.skills.map(category => ({
+      name: category.category,
+      skills: category.items.map(skill => ({
+        name: skill.name,
+        icon: iconMap[skill.icon],
+        color: skill.color
+      }))
+    })), []);
 
   // Theme classes
   const defaultThemeClass = 'bg-gray-50 text-gray-800';
@@ -305,13 +257,13 @@ const About = () => {
                 viewport={{ once: true }}
                 className="relative w-48 h-48 md:w-64 md:h-64"
               >
-                {/* Multiple gradient rings */}
+                {/* Multiple gradient rings - optimized */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-600 to-pink-500 rounded-full opacity-30 blur-xl animate-pulse" />
-                <div className="absolute inset-2 bg-gradient-to-tr from-cyan-400 to-blue-600 rounded-full opacity-20 blur-lg animate-spin-slow" />
+                <div className="absolute inset-2 bg-gradient-to-tr from-cyan-400 to-blue-600 rounded-full opacity-20 blur-lg" style={{ animation: 'spin-slow 8s linear infinite' }} />
 
-                {/* Floating orbs */}
-                <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur-sm animate-float" />
-                <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-r from-green-400 to-blue-500 rounded-full blur-sm animate-float-delayed" />
+                {/* Floating orbs - optimized */}
+                <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur-sm" style={{ animation: 'float 3s ease-in-out infinite' }} />
+                <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-r from-green-400 to-blue-500 rounded-full blur-sm" style={{ animation: 'float-delayed 4s ease-in-out infinite' }} />
 
                 {/* Main image container with glass effect */}
                 <div className={`relative w-full h-full rounded-full overflow-hidden border-2 backdrop-blur-sm ${
@@ -320,7 +272,7 @@ const About = () => {
                     : 'border-white/40 bg-white/20'
                 } shadow-2xl shadow-purple-500/25`}>
                   <Image
-                    src="/profile.png"
+                    src={portfolioData.personal.profileImage}
                     alt="Profile Picture"
                     fill
                     className={`object-cover hover:scale-110 transition-all duration-700 ease-out ${
@@ -347,27 +299,19 @@ const About = () => {
                 <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                   <TypewriterText text="About Me" delay={500} />
                 </h2>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className={`mb-4 ${
-                    mounted && currentTheme === 'dark' ? 'text-gray-400' : 'text-gray-500'
-                  }`}
-                >
-                  I'm a passionate Full Stack Developer with a keen eye for creating elegant solutions.
-                  My journey in development started with curiosity and has evolved into a professional
-                  pursuit of crafting exceptional digital experiences.
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  className={mounted && currentTheme === 'dark' ? 'text-gray-400' : 'text-gray-500'}
-                >
-                  When I'm not coding, you can find me exploring new technologies, contributing to open-source
-                  projects, or sharing my knowledge through technical writing.
-                </motion.p>
+                {portfolioData.about.description.map((paragraph, index) => (
+                  <motion.p
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 + (index * 0.2) }}
+                    className={`mb-4 ${
+                      mounted && currentTheme === 'dark' ? 'text-gray-400' : 'text-gray-500'
+                    }`}
+                  >
+                    {paragraph}
+                  </motion.p>
+                ))}
               </motion.div>
             </div>
 
