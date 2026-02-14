@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /out/
+/.vscode
 
 # production
 /build
@@ -23,8 +24,8 @@
 # misc
 .DS_Store
 *.pem
-.kiro
-.swc
+/.kiro
+/.swc
 
 # debug
 npm-debug.log*
