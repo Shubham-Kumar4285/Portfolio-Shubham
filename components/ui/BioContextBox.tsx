@@ -29,10 +29,10 @@ export const BioContextBox: React.FC<BioContextBoxProps> = ({
   theme = 'dark',
   isMobile = false,
 }) => {
-  const bgColor = theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(17, 25, 40, 0.75)';
-  const borderColor = theme === 'light' ? 'rgba(102, 126, 234, 0.2)' : 'rgba(255, 255, 255, 0.125)';
-  const textColor = theme === 'light' ? '#1f2937' : '#ffffff';
-  const descColor = theme === 'light' ? '#4b5563' : 'rgba(255, 255, 255, 0.8)';
+  const bgColor = theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(30, 20, 50, 0.85)';
+  const borderColor = theme === 'light' ? 'rgba(102, 126, 234, 0.2)' : 'rgba(147, 112, 219, 0.3)';
+  const textColor = theme === 'light' ? '#1f2937' : '#e9d5ff';
+  const descColor = theme === 'light' ? '#4b5563' : 'rgba(233, 213, 255, 0.85)';
   
   return (
     <div
@@ -43,8 +43,8 @@ export const BioContextBox: React.FC<BioContextBoxProps> = ({
         right: isMobile ? 'auto' : 'auto',
         maxWidth: isMobile ? 'calc(100% - 1.5rem)' : '28rem',
         padding: isMobile ? '0.625rem 0.75rem' : '1.5rem',
-        backdropFilter: 'blur(12px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(12px) saturate(180%)',
+        backdropFilter: 'blur(16px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(16px) saturate(180%)',
         backgroundColor: bgColor,
         border: `1px solid ${borderColor}`,
         zIndex: 20,

@@ -51,14 +51,14 @@ const Projects = () => {
       id="projects"
       className={`relative py-20 transition-colors duration-300 ${
         theme === 'dark'
-          ? 'bg-gray-900'
+          ? 'bg-gradient-to-br from-purple-950 via-gray-900 to-indigo-950'
           : 'bg-gray-50'
       }`}
     >
       {/* Simplified background */}
-      <div className={`absolute inset-0 opacity-30 ${
+      <div className={`absolute inset-0 opacity-40 ${
         theme === 'dark'
-          ? 'bg-gradient-to-br from-gray-900 via-purple-900/10 to-blue-900/10'
+          ? 'bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-pink-900/20'
           : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
       }`} />
 

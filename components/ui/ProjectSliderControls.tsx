@@ -41,10 +41,10 @@ export const ProjectSliderControls: React.FC<ProjectSliderControlsProps> = ({
 }) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   
-  const textColor = theme === 'light' ? '#000000' : '#ffffff';
-  const glassColor = theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(17, 25, 40, 0.75)';
-  const borderColor = theme === 'light' ? 'rgba(102, 126, 234, 0.2)' : 'rgba(255, 255, 255, 0.125)';
-  const counterColor = theme === 'light' ? '#4b5563' : 'rgba(255, 255, 255, 0.6)';
+  const textColor = theme === 'light' ? '#000000' : '#e9d5ff';
+  const glassColor = theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(30, 20, 50, 0.85)';
+  const borderColor = theme === 'light' ? 'rgba(102, 126, 234, 0.2)' : 'rgba(147, 112, 219, 0.3)';
+  const counterColor = theme === 'light' ? '#4b5563' : 'rgba(233, 213, 255, 0.7)';
 
 
   // Handle navigation with wrapping
@@ -101,8 +101,8 @@ export const ProjectSliderControls: React.FC<ProjectSliderControlsProps> = ({
             fontSize: isMobile ? '0.75rem' : '1rem',
             fontWeight: 600,
             gap: isMobile ? '0.375rem' : '0.5rem',
-            backdropFilter: 'blur(12px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(12px) saturate(180%)',
+            backdropFilter: 'blur(16px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(16px) saturate(180%)',
             backgroundColor: glassColor,
             border: `1px solid ${borderColor}`,
             color: textColor,
@@ -117,8 +117,8 @@ export const ProjectSliderControls: React.FC<ProjectSliderControlsProps> = ({
         {projects.length > 0 && (
           <div className="flex items-center rounded-lg" style={{
             gap: isMobile ? '0.375rem' : '1rem',
-            backdropFilter: 'blur(12px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(12px) saturate(180%)',
+            backdropFilter: 'blur(16px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(16px) saturate(180%)',
             backgroundColor: glassColor,
             border: `1px solid ${borderColor}`,
             padding: isMobile ? '0.375rem' : '0.5rem',

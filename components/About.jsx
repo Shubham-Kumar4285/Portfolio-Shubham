@@ -191,7 +191,7 @@ const About = () => {
   // Theme classes
   const themeClass = mounted
     ? currentTheme === 'dark'
-      ? 'bg-gray-900 text-white'
+      ? 'bg-gradient-to-br from-purple-950 via-gray-900 to-indigo-950 text-white'
       : 'bg-gray-50 text-gray-800'
     : 'bg-gray-50 text-gray-800';
 
