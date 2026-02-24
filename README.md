@@ -2,7 +2,7 @@
 
 A high-performance, interactive portfolio website built with Next.js 15, featuring cinematic 3D hero sections, smooth animations, and a modern glassmorphic design.
 
-![Portfolio Preview](public/preview.png)
+![Portfolio Preview](public/preview.PNG)
 
 ## ✨ Features
 
@@ -276,3 +276,4 @@ Contributions, issues, and feature requests are welcome!
 ⭐ Star this repo if you found it helpful!
 
 Built with ❤️ using modern web technologies
+
