@@ -2,7 +2,7 @@
 
 A high-performance, interactive portfolio website built with Next.js 15, featuring cinematic 3D hero sections, smooth animations, and a modern glassmorphic design.
 
-![Portfolio Preview](public/preview.PNG)
+![Portfolio Preview](public/preview.png)
 
 ## ✨ Features
 
@@ -41,7 +41,7 @@ A high-performance, interactive portfolio website built with Next.js 15, featuri
 - **Framework**: [Next.js 15](https://nextjs.org/) with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org/) & JavaScript
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Animations**: 
+- **Animations**:
   - [Framer Motion](https://www.framer.com/motion/) - React animations
   - [GSAP](https://greensock.com/gsap/) - Advanced animations
 - **Smooth Scroll**: [Lenis](https://lenis.studiofreight.com/)
