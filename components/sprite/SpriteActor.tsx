@@ -26,18 +26,23 @@ export function SpriteActor({ base = 'idle', className, label }: { base?: RoninA
     const host = el.closest('.panel') ?? el.parentElement;
     host?.addEventListener('mouseenter', strike);
 
+    // Animate only while on screen (CSS pauses everything without data-on),
+    // and strike once each time he comes into view.
     let seen = false;
+    const setOn = (on: boolean) => el.toggleAttribute('data-on', on);
     const io =
       typeof IntersectionObserver === 'undefined'
         ? null
         : new IntersectionObserver(
             ([e]) => {
-              if (e.isIntersecting && !seen) strike();
-              seen = e.isIntersecting;
+              setOn(e.isIntersecting);
+              if (e.intersectionRatio >= 0.3 && !seen) strike();
+              seen = e.intersectionRatio >= 0.3;
             },
-            { threshold: 0.3 },
+            { threshold: [0, 0.3] },
           );
-    io?.observe(el);
+    if (io) io.observe(el);
+    else setOn(true);
     return () => {
       host?.removeEventListener('mouseenter', strike);
       io?.disconnect();
@@ -46,7 +51,7 @@ export function SpriteActor({ base = 'idle', className, label }: { base?: RoninA
 
   const looping = anim === base;
   return (
-    <div ref={ref} className={`relative flex items-end justify-center ${className ?? ''}`}>
+    <div ref={ref} className={`sprite-actor relative flex items-end justify-center ${className ?? ''}`}>
       <Embers burst={anim === 'slash'} burstKey={strikes} />
       <SpriteAnimation
         sheet={RONIN}
@@ -54,7 +59,7 @@ export function SpriteActor({ base = 'idle', className, label }: { base?: RoninA
         loop={looping || undefined}
         onEnd={() => setAnim(base)}
         onLoop={base === 'slash' ? () => setStrikes((n) => n + 1) : undefined}
-        className="glow relative z-[1] h-full"
+        className="relative z-[1] h-full"
         label={label}
       />
     </div>

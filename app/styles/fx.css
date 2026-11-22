@@ -215,22 +215,29 @@
 html.night {
   --ember: 255 42 66; /* night: blood red */
 }
-.sprite-sheet.glow {
-  filter: drop-shadow(0 0 10px rgb(var(--ember) / 0.35));
-}
 .embers {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0; /* behind the sprite (z-index 1) */
 }
+/*
+ * Soft aura behind him. A static gradient instead of filter: drop-shadow on the sprite,
+ * which had to be recomputed on every frame step and every scroll-driven scale.
+ */
+.embers::before {
+  content: '';
+  position: absolute;
+  inset: 20% 15% 0;
+  background: radial-gradient(closest-side, rgb(var(--ember) / 0.22), transparent);
+}
+/* Plain squares (no per-particle box-shadow: dozens of blurred layers were the main scroll cost). */
 .embers i {
   position: absolute;
   display: block;
   width: var(--s, 3px);
   height: var(--s, 3px);
   background: rgb(var(--ember));
-  box-shadow: 0 0 6px rgb(var(--ember) / 0.8);
 }
 .ember {
   left: var(--x);
@@ -297,5 +304,10 @@ html.night {
 }
 /* He stops to attack: freeze the ground until he walks again. */
 .panel:has(.sprite-sheet[data-anim='slash']) .ruins-track {
+  animation-play-state: paused;
+}
+/* Off-screen characters (SpriteActor without data-on) don't animate at all. */
+.sprite-actor:not([data-on]) :is(.sprite-sheet, .ember),
+.panel:has(.sprite-actor:not([data-on])) .ruins-track {
   animation-play-state: paused;
 }

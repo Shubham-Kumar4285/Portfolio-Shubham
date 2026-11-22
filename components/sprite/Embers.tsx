@@ -21,7 +21,7 @@ type Props = {
  * Pure CSS; the colour comes from `--ember` (styles/fx.css), so it follows the edition:
  * violet by day, blood red at night.
  */
-const EMBERS = 18;
+const EMBERS = 10;
 
 export function Embers({ burst = false, burstKey = 0 }: Props) {
   const r = rng(7);
