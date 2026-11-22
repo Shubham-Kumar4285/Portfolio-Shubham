@@ -3,6 +3,16 @@ import { Panel, Sfx, SpeedLines } from '@/components/manga/primitives';
 import { Ed } from '@/components/manga/Ed';
 import { edition, getSkills } from '@/lib/content';
 
+/**
+ * Rough rendered width of a name in Dela Gothic One, in em
+ * (capitals are wide, punctuation and spaces narrow), calibrated against the rendered font, plus 6% headroom.
+ */
+function nameWidthEm(name: string): number {
+  let em = 0;
+  for (const ch of name) em += /[A-Z]/.test(ch) ? 0.85 : /[a-z0-9]/.test(ch) ? 0.66 : /\s/.test(ch) ? 0.3 : 0.45;
+  return +(em * 1.06).toFixed(2);
+}
+
 export function Awakening() {
   const skills = getSkills();
 
@@ -32,13 +42,19 @@ export function Awakening() {
             <Panel
               as="li"
               key={s.name}
-              className="flex min-h-[160px] flex-col justify-between border-4 border-bone bg-paper p-[18px] text-fg shadow-[6px_6px_0_var(--color-accent)]"
+              className="@container flex min-h-[160px] flex-col justify-between border-4 border-bone bg-paper p-[18px] text-fg shadow-[6px_6px_0_var(--color-accent)]"
             >
               <div className="flex justify-between font-mono text-xs">
                 <span>TECHNIQUE {String(i + 1).padStart(2, '0')}</span>
                 <span>{s.tag}</span>
               </div>
-              <p className="m-0 font-display text-[28px] leading-none">{s.name}</p>
+              {/* 28px like the design, shrinking only when a long name (e.g. "JavaScript") would overflow the card. */}
+              <p
+                className="m-0 font-display leading-none whitespace-nowrap"
+                style={{ fontSize: `min(28px, calc(100cqi / ${nameWidthEm(s.name)}))` }}
+              >
+                {s.name}
+              </p>
               <div
                 role="meter"
                 aria-label={`${s.name} proficiency`}
