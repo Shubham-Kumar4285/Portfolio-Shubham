@@ -57,7 +57,7 @@ public/sprites/ronin.webp  the character: 6 frames × idle / walk / slash / jump
 - **Pinned pages (desktop):** chapters that fit on one screen (Origin, Finale) stay in place while their panels appear one at a time. To pin a section, give it `pin-track` with a `--n` step count, wrap its content in `pin-stage`, and give each `Panel`/`CharacterPanel` a `step={i}`. Pinning is off below 1024×740 and with reduced motion.
 - **Page curl:** `PageTurn` peels the previous page away as you scroll.
 - **Typewriter + shake:** `Bubble` text types out when its panel lands. `Burst` and `Sfx` shake their section once.
-- **Page counter, brush cursor, halftone screenshots** (colour returns on hover). Speed lines stand still on phones.
+- **Page counter, brush cursor, halftone screenshots** (full colour with light print dots that fade on hover). Speed lines stand still on phones.
 
 Effect styles live in `app/styles/fx.css`.
 

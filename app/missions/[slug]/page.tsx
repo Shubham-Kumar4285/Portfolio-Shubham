@@ -51,7 +51,7 @@ export default async function CaseFilePage({ params }: Params) {
 
         <div className="g8 grid grid-cols-8 gap-3">
           <Panel slant={[[0, 0], [100, 0], [98, 100], [0, 100]]} className="col-span-5">
-            <MissionShot project={project} className="h-full min-h-[380px]" sizes="(max-width: 700px) 100vw, 62vw" />
+            <MissionShot project={project} className="h-full min-h-[380px]" sizes="(max-width: 700px) 100vw, 62vw" priority />
           </Panel>
 
           <CharacterPanel pose="strike" bubble="Case closed." className="col-span-3 min-h-[380px] bg-sheet" />

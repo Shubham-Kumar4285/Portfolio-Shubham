@@ -3,8 +3,19 @@ import Link from 'next/link';
 import { Panel, cx } from '@/components/manga/primitives';
 import type { Project } from '@/lib/types';
 
-/** Screenshot printed in ink: grayscale + halftone dots, full colour on hover. */
-export function MissionShot({ project, className, sizes }: { project: Project; className?: string; sizes: string }) {
+/** Project screenshot in full colour, with light halftone dots that fade on hover. */
+export function MissionShot({
+  project,
+  className,
+  sizes,
+  priority = false,
+}: {
+  project: Project;
+  className?: string;
+  sizes: string;
+  /** Above-the-fold hero image (case file): load it right away. */
+  priority?: boolean;
+}) {
   return (
     <div className={cx('group/shot relative overflow-hidden bg-ink', className)}>
       <Image
@@ -12,12 +23,13 @@ export function MissionShot({ project, className, sizes }: { project: Project; c
         alt={`${project.title} screenshot`}
         fill
         sizes={sizes}
-        className="object-cover object-top contrast-[1.35] grayscale transition-[filter] duration-500 group-hover/shot:contrast-100 group-hover/shot:grayscale-0"
+        preload={priority}
+        className="object-cover object-top"
       />
-      {/* Halftone: printed dots over the inked screenshot; colour returns on hover. */}
+      {/* Light halftone so it reads as print; the dots fade on hover to show the clean shot. */}
       <div
         aria-hidden="true"
-        className="tone absolute inset-0 opacity-45 mix-blend-multiply transition-opacity duration-500 group-hover/shot:opacity-0"
+        className="tone absolute inset-0 opacity-20 mix-blend-multiply transition-opacity duration-500 group-hover/shot:opacity-0"
       />
     </div>
   );

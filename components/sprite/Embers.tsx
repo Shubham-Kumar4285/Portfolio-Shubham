@@ -23,17 +23,24 @@ type Props = {
  */
 const EMBERS = 10;
 
+/**
+ * Round to one decimal. Server (Node) and browser can disagree on the last digit of
+ * floats (Math.sin/cos especially), and any difference in these inline styles is a
+ * hydration mismatch.
+ */
+const n = (v: number) => v.toFixed(1);
+
 export function Embers({ burst = false, burstKey = 0 }: Props) {
   const r = rng(7);
   const embers = Array.from({ length: EMBERS }, () => {
     const d = 3.5 + r() * 4; // seconds per rise
     return {
-      '--x': `${8 + r() * 84}%`,
-      '--y': `${r() * 55}%`,
+      '--x': `${n(8 + r() * 84)}%`,
+      '--y': `${n(r() * 55)}%`,
       '--s': `${r() > 0.7 ? 7 : 4}px`,
       '--a': (0.5 + r() * 0.5).toFixed(2),
-      '--dx': `${(r() - 0.5) * 40}px`,
-      '--rise': `${90 + r() * 140}px`,
+      '--dx': `${n((r() - 0.5) * 40)}px`,
+      '--rise': `${n(90 + r() * 140)}px`,
       '--d': `${d.toFixed(2)}s`,
       '--delay': `${(-r() * d).toFixed(2)}s`, // negative: already mid-flight on load
     };
@@ -42,8 +49,8 @@ export function Embers({ burst = false, burstKey = 0 }: Props) {
     const angle = (i / 12) * Math.PI * 2 + r() * 0.4;
     const dist = 60 + r() * 70;
     return {
-      '--dx': `${Math.cos(angle) * dist}px`,
-      '--dy': `${Math.sin(angle) * dist * 0.7}px`,
+      '--dx': `${n(Math.cos(angle) * dist)}px`,
+      '--dy': `${n(Math.sin(angle) * dist * 0.7)}px`,
       '--s': `${r() > 0.5 ? 6 : 3}px`,
       '--delay': `${(r() * 0.12).toFixed(2)}s`,
     };
