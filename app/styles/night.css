@@ -1,0 +1,134 @@
+/*
+ * Night Edition, ported from shubham-portfolio-night.html:
+ * inverted ink (bone lines on black) and a blood-red accent.
+ * <html class="night"> is the default; the head script and <ModeToggle/> switch it.
+ */
+
+/* ---------- edition switching (copy + toggle label) ---------- */
+html:not(.night) .ed-night,
+html.night .ed-day {
+  display: none !important;
+}
+/*
+ * Fixed-width variant: both editions share one grid cell and the inactive one
+ * is only made invisible, so the element is always as wide as its longer text
+ * and switching editions never shifts the layout (header label, toggle button).
+ */
+.ed-stack {
+  display: inline-grid;
+}
+.ed-stack > * {
+  grid-area: 1 / 1;
+}
+html:not(.night) .ed-stack > .ed-night,
+html.night .ed-stack > .ed-day {
+  display: block !important;
+  visibility: hidden;
+}
+
+/* ---------- tokens ---------- */
+html.night {
+  color-scheme: dark;
+  --color-page: #0a0607;
+  --color-paper: #0e0809;
+  --color-paper-2: #0e0809;
+  --color-sheet: #17090b;
+  --color-ink: #000000;
+  --color-line: #f2e9e4;
+  --color-fg: #f2e9e4;
+  --color-fg-inv: #f2e9e4;
+  --color-accent: #c8102e;
+  --color-shadow: #c8102e;
+  --color-letter-bg: #f2e9e4;
+  --color-letter-fg: #0a0607;
+  --color-letter-line: #0a0607;
+  --color-cap-ring: #c8102e;
+  --tone-dot: #c8102e;
+  --tone-lt-dot: rgba(200, 16, 46, 0.35);
+  --speed-ink: #3a0a10;
+  --hline-ink: #c8102e;
+}
+
+/* ---------- elements that exist in both editions ---------- */
+@layer components {
+  .moon {
+    display: none;
+    position: absolute;
+    right: 8%;
+    top: 6%;
+    width: clamp(120px, 16vw, 220px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #c8102e;
+    box-shadow: 0 0 80px 30px rgba(200, 16, 46, 0.5);
+  }
+  .slash {
+    display: none;
+    position: absolute;
+    left: -5%;
+    top: 48%;
+    width: 110%;
+    height: 10px;
+    background: #111;
+    transform: rotate(-14deg);
+    z-index: 4;
+  }
+  .modebtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 3px solid #111;
+    background: #fff;
+    color: #111;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+  }
+}
+
+/* ---------- night-only overrides (unlayered, so they beat utilities) ---------- */
+.night .modebtn {
+  background: #c8102e;
+  color: #fff;
+  border-color: #f2e9e4;
+}
+.night .speed {
+  filter: none !important;
+  opacity: 0.9 !important;
+}
+.night .ruins [stroke] {
+  stroke: #7a1c24;
+}
+.night .ruins [fill="#111"] {
+  fill: #7a1c24;
+}
+.night .hero svg {
+  filter: drop-shadow(0 0 1.5px #f2e9e4) drop-shadow(0 0 10px #c8102e);
+}
+.night .c-eyes path {
+  stroke: #ff2a3d;
+}
+.night .moon {
+  display: block;
+}
+.night .slash {
+  display: block;
+  background: #c8102e;
+  animation: slashin 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+}
+/* Back of a black page, for the page curl. */
+.night .turn-flap {
+  background: linear-gradient(100deg, #000 0%, #2a1417 45%, #120a0b 100%);
+}
+
+@keyframes slashin {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}

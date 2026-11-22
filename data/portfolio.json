@@ -1,158 +1,198 @@
 {
+  "site": {
+    "url": "https://portfolio-shubham-seven.vercel.app",
+    "volume": "VOL.01"
+  },
   "personal": {
     "name": "Shubham Kumar",
+    "shortName": "Shubham",
     "title": "Full Stack Developer",
-    "subtitle": "Full Stack Developer crafting seamless digital experiences from stunning frontends to powerful backends.",
-    "profileImage": "/profile.png",
-    "location": "Ghaziabad, India"
+    "description": "Full Stack Developer crafting seamless digital experiences, from stunning frontends to powerful backends.",
+    "location": "Ghaziabad",
+    "yearsExp": "",
+    "email": ""
   },
-  "about": {
-    "description": [
-      "I'm a passionate Full Stack Developer with a keen eye for creating elegant solutions. My journey in development started with curiosity and has evolved into a professional pursuit of crafting exceptional digital experiences.",
-      "When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing my knowledge through technical writing."
-    ]
+  "origin": {
+    "caption": "It started with curiosity. A blank editor. One stubborn bug.",
+    "intro": "I'm a Full Stack Developer with an eye for elegant solutions. What began as tinkering became a craft: building digital experiences end to end, from stunning frontends to backends that don't flinch.",
+    "originMoment": "The first error I refused to give up on.",
+    "offDuty": "Exploring new tech, open-source quests, writing up what I learn."
   },
   "skills": [
     {
-      "category": "Programming Languages",
-      "items": [
-        { "name": "Java", "icon": "FaJava", "color": "#007396" },
-        { "name": "Kotlin", "icon": "FaCode", "color": "#7F52FF" },
-        { "name": "C/C++", "icon": "BiCodeAlt", "color": "#00599C" },
-        { "name": "Python", "icon": "FaPython", "color": "#3776AB" },
-        { "name": "JavaScript", "icon": "SiJavascript", "color": "#F7DF1E" }
-      ]
+      "name": "Java",
+      "tag": "LANG",
+      "level": 90
     },
     {
-      "category": "Front-End",
-      "items": [
-        { "name": "HTML5", "icon": "SiHtml5", "color": "#E34F26" },
-        { "name": "CSS3", "icon": "SiCss3", "color": "#1572B6" },
-        { "name": "React", "icon": "SiReact", "color": "#61DAFB" },
-        { "name": "Bootstrap", "icon": "SiBootstrap", "color": "#7952B3" }
-      ]
+      "name": "Kotlin",
+      "tag": "LANG",
+      "level": 80
     },
     {
-      "category": "Back-End",
-      "items": [
-        { "name": "Spring", "icon": "SiSpring", "color": "#6DB33F" },
-        { "name": "Spring Boot", "icon": "SiSpringboot", "color": "#6DB33F" }
-      ]
+      "name": "C / C++",
+      "tag": "LANG",
+      "level": 75
     },
     {
-      "category": "Development Tools",
-      "items": [
-        { "name": "Android Studio", "icon": "SiAndroidstudio", "color": "#3DDC84" },
-        { "name": "Eclipse", "icon": "SiEclipseide", "color": "#2C2255" },
-        { "name": "Visual Studio", "icon": "DiVisualstudio", "color": "#5C2D91" },
-        { "name": "IntelliJ IDEA", "icon": "DiIntellij", "color": "#000000" },
-        { "name": "Git", "icon": "SiGit", "color": "#F05032" }
-      ]
+      "name": "Python",
+      "tag": "LANG",
+      "level": 80
     },
     {
-      "category": "Android Development",
-      "items": [
-        { "name": "Android SDK", "icon": "SiAndroid", "color": "#3DDC84" },
-        { "name": "Jetpack Compose", "icon": "BiMobileAlt", "color": "#4285F4" },
-        { "name": "XML", "icon": "SiAndroid", "color": "#3DDC84" },
-        { "name": "Retrofit", "icon": "FaMobile", "color": "#3DDC84" },
-        { "name": "React Native", "icon": "SiReact", "color": "#61DAFB" }
-      ]
+      "name": "JavaScript",
+      "tag": "LANG",
+      "level": 92
     },
     {
-      "category": "Data Science",
-      "items": [
-        { "name": "NumPy", "icon": "SiNumpy", "color": "#013243" },
-        { "name": "Pandas", "icon": "SiPandas", "color": "#150458" },
-        { "name": "Matplotlib", "icon": "FaChartLine", "color": "#11557C" },
-        { "name": "Machine Learning", "icon": "SiTensorflow", "color": "#FF6F00" },
-        { "name": "Computer Vision", "icon": "SiOpencv", "color": "#5C3EE8" }
-      ]
+      "name": "React",
+      "tag": "FRONT",
+      "level": 88
+    },
+    {
+      "name": "Node.js",
+      "tag": "BACK",
+      "level": 85
+    },
+    {
+      "name": "SQL",
+      "tag": "DATA",
+      "level": 75
     }
   ],
   "projects": [
     {
-      "title": "Reel Pick - Movie Recommender app",
-      "description": "Discover your next favorite film with personalized recommendations tailored to your tastes. Simply select the genres and movie types you love, and our system—powered by Natural Language Processing and Machine Learning—analyzes your preferences to suggest similar titles and hidden gems just for you.",
-      "tags": ["Python", "Machine Learning", "Streamlit", "Numpy", "Pandas", "NLP"],
-      "image": "/projects/reel-pick/screenshot.png",
-      "link": "https://github.com/Shubham-Kumar4285/reelpick"
-    },
-    
-    {
-      "title": "Recipe App",
-      "description": "A modern Recipe App built with Jetpack Compose that fetches meals from the MealDB API and displays them using a LazyVerticalGrid for smooth, efficient browsing. It leverages Retrofit for networking, Coil for image loading, and follows the MVVM architecture with Navigation Compose for seamless screen transitions.",
+      "slug": "reel-pick",
+      "title": "Reel Pick",
+      "rank": "S",
+      "short": "A movie recommender app.",
+      "summary": "A movie recommender app: pick the genres and kinds of film you love, and NLP + machine learning surface similar titles and hidden gems. Built with Python, Pandas and Streamlit.",
+      "description": "Discover your next favourite film with recommendations tailored to your taste. Select the genres and movie types you love, and the system, powered by Natural Language Processing and Machine Learning, analyses your preferences to suggest similar titles and hidden gems just for you.",
+      "enemy": "Endless scrolling through streaming catalogues without finding anything worth watching.",
+      "victory": "A Streamlit app that turns a few genre picks into a ranked list of similar titles and hidden gems.",
       "tags": [
-        "Jetpack Compose",
-        "LazyVerticalGrid",
-        "Retrofit",
-        "Coil",
-        "MVVM Architecture",
-        "Navigation Compose",
-        "Kotlin",
-        "REST API Integration",
-        "Asynchronous Programming",
-        "State Management"
+        "Python",
+        "Machine Learning",
+        "NLP",
+        "Streamlit",
+        "NumPy",
+        "Pandas"
       ],
-      "image": "/projects/recipe-app/screenshot.png",
-      "link": "https://github.com/Shubham-Kumar4285/RecipeApp"
+      "image": "/projects/reel-pick/screenshot.png",
+      "repo": "https://github.com/Shubham-Kumar4285/reelpick"
     },
     {
-      "title": "VoyageX – AI Travel Planner App",
-      "description": "Developed a cross-platform travel app that generates AI-powered itineraries using the Gemini API. Integrated Firebase for user authentication and cloud storage, managing data in JSON format. Designed an intuitive, responsive UI/UX with features like trip creation, destination discovery, and itinerary review.",
+      "slug": "calmly",
+      "title": "Calmly",
+      "rank": "A",
+      "short": "AI-powered mental health tracker with Gemini insights.",
+      "summary": "Mood logging, journaling and personalised AI insights on a React + FastAPI + PostgreSQL stack.",
+      "description": "A full-stack, AI-driven mental health platform where users log moods, journal their thoughts and receive personalised insights powered by Google Gemini. A responsive React frontend with interactive dashboards and wellness tools talks to a FastAPI backend and PostgreSQL database, with JWT authentication and encrypted storage.",
+      "enemy": "Moods and journal entries scattered across apps, with no way to see patterns over time.",
+      "victory": "One dashboard for moods, journals and wellness tools, with Gemini-generated insights and JWT-secured, encrypted storage.",
       "tags": [
-        "React-Native",
-        "API Integration",
-        "Material UI",
-        "Gemini",
+        "React 19",
+        "FastAPI",
+        "PostgreSQL",
+        "Gemini API",
+        "JWT Auth",
+        "SQLModel",
+        "Recharts",
+        "Framer Motion"
+      ],
+      "image": "/projects/calmly/dashboard.png",
+      "repo": "https://github.com/Shubham-Kumar4285/Calmly"
+    },
+    {
+      "slug": "voyagex",
+      "title": "VoyageX",
+      "rank": "A",
+      "short": "AI travel planner: Gemini itineraries, Firebase backend.",
+      "summary": "A cross-platform React Native app that generates AI itineraries with Gemini.",
+      "description": "A cross-platform travel app that generates AI-powered itineraries using the Gemini API. Firebase handles user authentication and cloud storage, with trip data managed as JSON. The UI covers trip creation, destination discovery and itinerary review in an intuitive, responsive flow.",
+      "enemy": "Planning a trip means juggling dozens of tabs to stitch an itinerary together.",
+      "victory": "A cross-platform app that drafts a full AI itinerary from a destination and preferences, with trips saved to the cloud.",
+      "tags": [
+        "React Native",
         "Expo",
-        "RESTful API Integration",
-        "Cloud-based Data Management",
-        "Mobile Navigation & Routing",
-        "Firebase Authentication & Cloud Storage"
+        "Gemini",
+        "Firebase Auth",
+        "Cloud Storage",
+        "REST APIs",
+        "Mobile Routing"
       ],
       "image": "/projects/voyagex/screenshot.png",
-      "link": "https://github.com/Shubham-Kumar4285/VoyageX"
+      "repo": "https://github.com/Shubham-Kumar4285/VoyageX"
     },
-      {"title": "Calmly – AI-Powered Mental Health Tracker",
-  "description": "Built a full-stack AI-driven mental health tracking platform that enables users to log moods, journal thoughts, and receive personalized insights powered by Google Gemini. Developed a responsive React frontend with interactive dashboards and wellness tools, integrated with a FastAPI backend and PostgreSQL database for secure, scalable data management using JWT authentication and encrypted storage.",
-  "tags": [
-    "React 19",
-    "FastAPI",
-    "PostgreSQL",
-    "Google Gemini API",
-    "JWT Authentication",
-    "Full-Stack Development",
-    "AI-Powered Insights",
-    "Data Visualization (Recharts)",
-    "SQLModel",
-    "RESTful API Development",
-    "Secure Data Handling",
-    "Framer Motion"
+    {
+      "slug": "recipe-app",
+      "title": "Recipe App",
+      "rank": "B",
+      "short": "Jetpack Compose recipe browser on the MealDB API.",
+      "summary": "A Kotlin + Jetpack Compose app with MVVM, Retrofit and Coil.",
+      "description": "A modern recipe app built with Jetpack Compose that fetches meals from the MealDB API and shows them in a LazyVerticalGrid for smooth, efficient browsing. Retrofit handles networking, Coil loads images, and the app follows MVVM with Navigation Compose for seamless screen transitions.",
+      "enemy": "Finding a meal idea fast on a phone, without wading through slow, cluttered pages.",
+      "victory": "A native Compose app with a smooth image grid, MVVM state handling and seamless navigation between meals.",
+      "tags": [
+        "Kotlin",
+        "Jetpack Compose",
+        "MVVM",
+        "Retrofit",
+        "Coil",
+        "Navigation Compose",
+        "REST APIs"
+      ],
+      "image": "/projects/recipe-app/screenshot.png",
+      "repo": "https://github.com/Shubham-Kumar4285/RecipeApp"
+    }
   ],
-  "image": "/projects/calmly/dashboard.png",
-  "link": "https://github.com/Shubham-Kumar4285/Calmly"
-}
+  "social": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/Shubham-Kumar4285"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/shubham-kumar-98aaa7255/"
+    }
   ],
   "contact": {
-    "description": "Feel free to reach out for collaborations or just a friendly hello!",
-    "formspreeId": "xvgqqnlj",
-    "socialLinks": [
-      {
-        "name": "GitHub",
-        "url": "https://github.com/Shubham-Kumar4285",
-        "icon": "FiGithub"
-      },
-      {
-        "name": "LinkedIn",
-        "url": "https://www.linkedin.com/in/shubham-kumar-98aaa7255/",
-        "icon": "FiLinkedin"
-      },
-      {
-        "name": "Twitter",
-        "url": "https://x.com/Shubham0056572?t=iyy24ma8FN4c3-Tp5nAF7w",
-        "icon": "FiTwitter"
-      }
-    ]
+    "formspreeId": "xvgqqnlj"
+  },
+  "editions": {
+    "day": {
+      "vol": "VOL.01",
+      "cover": "In a city of broken builds and 3 a.m. deploys, one developer was about to wake up…",
+      "b0": "Alright. Let’s ship something.",
+      "sfx": "CRACK",
+      "tag": "Stunning frontends. Backends that hold the line.",
+      "b1": "Hmph. So that’s how it works.",
+      "b2": "Every bug made me sharper.",
+      "ch2": "He drew his blade, and the arsenal answered.",
+      "b3": "Next mission. Let’s go.",
+      "b4": "Your move.",
+      "end": "TO BE CONTINUED…",
+      "endsub": "The next chapter needs a co-author. Got a mission?",
+      "cta": "START A MISSION",
+      "cineWord": "夜明け DAWN",
+      "cineSub": "DAY EDITION — BACK TO THE CRAFT"
+    },
+    "night": {
+      "vol": "NIGHT EDITION",
+      "cover": "Midnight. The city sleeps. The backlog doesn’t. Neither does he.",
+      "b0": "Tickets. Bugs. Deadlines. All of you. Tonight.",
+      "sfx": "SLASH",
+      "tag": "The executioner of tickets. Fast, silent, shipped by dawn.",
+      "b1": "One stack trace is all I need.",
+      "b2": "Every technique, honed for the kill.",
+      "ch2": "Under the red moon, every technique cuts clean.",
+      "b3": "Target acquired. Deploying.",
+      "b4": "Who’s next?",
+      "end": "BY DAWN, IT SHIPS.",
+      "endsub": "Got a deadline that needs executing? Send the contract.",
+      "cta": "SEND THE CONTRACT",
+      "cineWord": "夜 SLASH",
+      "cineSub": "NIGHT EDITION — THE EXECUTIONER WAKES"
+    }
   }
 }

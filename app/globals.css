@@ -1,110 +1,86 @@
 @import "tailwindcss";
+@import "./styles/manga.css";
+@import "./styles/fx.css";
+@import "./styles/night.css";
+@import "./styles/cine.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Colour tokens by ROLE, so the Night Edition can remap each role
+ * (see html.night in styles/night.css). Day values are the Vol.01 design.
+ * `static` keeps every token emitted, because hand-written CSS uses them too.
+ */
+@theme static {
+  --color-page: #ede6d6; /* page background */
+  --color-paper: #ede6d6; /* paper panels / sections */
+  --color-paper-2: #e4ded0;
+  --color-sheet: #ffffff; /* white panels */
+  --color-ink: #111111; /* dark panels / sections */
+  --color-line: #111111; /* borders and rules */
+  --color-fg: #111111; /* text on paper / sheet */
+  --color-fg-inv: #ede6d6; /* text on ink */
+  --color-bone: #ede6d6; /* fixed light ink (same in both editions) */
+  --color-accent: #6b2bd9;
+  --color-accent-text: #5a2bb8; /* accent for small text on light surfaces */
+  --color-accent-soft: #b693ff; /* accent for small text on ink */
+  --color-shadow: #111111; /* solid offset shadows */
+  --color-letter-bg: #ffffff; /* captions, bubbles, bursts */
+  --color-letter-fg: #111111;
+  --color-letter-line: #111111;
+  --color-cap-ring: #111111;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-dela), "Dela Gothic One", sans-serif;
+  --font-body: var(--font-zen), "Zen Kaku Gothic New", sans-serif;
+  --font-mono: var(--font-space-mono), "Space Mono", ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --header-h: 78px; /* sticky header height; it wraps to two rows on phones */
+    /* Texture inks */
+    --tone-dot: #111;
+    --tone-lt-dot: rgba(17, 17, 17, 0.3);
+    --speed-ink: #111;
+    --hline-ink: #111;
+  }
+  @media (max-width: 700px) {
+    :root {
+      --header-h: 128px;
+    }
+  }
+  html {
+    /* clip, not hidden: keeps position: sticky working; stops the switch shake adding a sideways scrollbar */
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h);
+  }
+  body {
+    margin: 0;
+    background: var(--color-page);
+    color: var(--color-fg);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.4s, color 0.4s;
+  }
+  a {
+    color: var(--color-fg);
+  }
+  a:hover {
+    color: var(--color-accent);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: #fff;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-
-/* Custom Cursor Styles */
-.custom-cursor-active {
-  cursor: none !important;
-}
-
-.custom-cursor-active * {
-  cursor: none !important;
-}
-
-.custom-cursor {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  mix-blend-mode: difference;
-  transform: translate(-50%, -50%);
-}
-
-/* Glassmorphic Box Styles */
-.glassmorphic-box {
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  background-color: rgba(17, 25, 40, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.125);
-  border-radius: 0.75rem;
-  padding: 1rem;
-}
-
-/* Restore default cursor on mobile */
-@media (max-width: 768px) {
-  .custom-cursor {
-    display: none !important;
-  }
-  
-  .custom-cursor-active,
-  .custom-cursor-active * {
-    cursor: auto !important;
-  }
-}
-
-/* Accessibility - Focus Styles */
-*:focus-visible {
-  outline: 3px solid rgba(59, 130, 246, 0.8);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-button:focus-visible,
-a:focus-visible {
-  outline: 3px solid rgba(59, 130, 246, 0.8);
-  outline-offset: 2px;
-}
-
-/* Skip to content link */
-.skip-to-content {
-  position: absolute;
-  top: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #000;
-  color: #fff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  z-index: 10000;
-  transition: top 0.3s;
-}
-
-.skip-to-content:focus {
-  top: 1rem;
-}
-
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  html {
+    scroll-behavior: auto;
   }
 }

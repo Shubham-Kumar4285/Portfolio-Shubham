@@ -1,11 +1,11 @@
 {
   "name": "Shubham Kumar - Full Stack Developer Portfolio",
   "short_name": "SK Portfolio",
-  "description": "Full Stack Developer crafting seamless digital experiences",
+  "description": "Full Stack Developer — a portfolio in manga form",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#667eea",
+  "background_color": "#EDE6D6",
+  "theme_color": "#111111",
   "icons": [
     {
       "src": "/favicon.png",

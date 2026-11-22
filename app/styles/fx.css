@@ -1,0 +1,180 @@
+/*
+ * Reading effects layered on the manga primitives:
+ *   1. pinned pages (panel-by-panel reading on desktop)
+ *   2. page-curl turns between chapters
+ *   3. typewriter speech bubbles + screen shake
+ *   4. fallback for browsers without scroll-driven animations (html.no-sda, set by <ScrollFx/>)
+ *   5. brush cursor, mobile performance
+ * Keep the pinned-page media query in sync with PIN_QUERY in components/fx/ScrollFx.tsx.
+ */
+
+@property --t {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1; /* fully turned = label visible without JS or animation */
+}
+
+@layer components {
+  /* ---------- 1. pinned pages ---------- */
+  @media (min-width: 1024px) and (min-height: 740px) and (prefers-reduced-motion: no-preference) {
+    .pin-track {
+      height: calc(100svh + var(--n) * 38svh);
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    .pin-stage {
+      position: sticky;
+      top: var(--header-h);
+      box-sizing: border-box;
+      height: calc(100svh - var(--header-h));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-block: 24px;
+    }
+    @supports (animation-timeline: view()) {
+      .pin-track {
+        view-timeline: --pin;
+      }
+      .step {
+        --r0: calc(var(--s) / var(--n) * 100%);
+        --r1: calc((var(--s) + 0.7) / var(--n) * 100%);
+        animation-timeline: --pin;
+        animation-range: contain var(--r0) contain var(--r1);
+      }
+      /* Lettering inside a step lands with its panel. */
+      .step .pop,
+      .step .char-in,
+      .step .sfx {
+        animation-timeline: --pin;
+        animation-range: contain var(--r0) contain var(--r1);
+      }
+    }
+  }
+
+  /* ---------- 2. page curl ---------- */
+  .turn {
+    --x: calc((1 - var(--t)) * 112%);
+    --f: calc(var(--t) * (1 - var(--t)) * 4 * 16%);
+  }
+  .turn-sheet,
+  .turn-flap {
+    position: absolute;
+    inset: 0;
+  }
+  .turn-sheet {
+    clip-path: polygon(0 0, var(--x) 0, calc(var(--x) - 6%) 100%, 0 100%);
+  }
+  .turn-flap-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    filter: drop-shadow(-6px 0 6px rgba(0, 0, 0, 0.35));
+  }
+  .turn-flap {
+    clip-path: polygon(var(--x) 0, calc(var(--x) + var(--f)) 0, calc(var(--x) - 6% + var(--f) * 0.55) 100%, calc(var(--x) - 6%) 100%);
+    background: linear-gradient(100deg, #b9b2a3 0%, #fffaf0 45%, #d9d1bf 100%);
+  }
+  .turn-flap.on-ink {
+    background: linear-gradient(100deg, #000 0%, #3a3a3a 45%, #1b1b1b 100%);
+  }
+  @supports (animation-timeline: view()) {
+    .turn {
+      animation: peel linear both;
+      animation-timeline: view();
+      animation-range: cover 12% cover 55%;
+    }
+  }
+
+  /* ---------- 3. typewriter + shake ---------- */
+  .typer .ch {
+    opacity: 0;
+  }
+  .typer.typed .ch {
+    opacity: 1;
+    transition: opacity 0s linear calc(var(--i) * 28ms);
+  }
+  .shake {
+    animation: shake 0.38s linear;
+  }
+
+  /* ---------- 4. fallback: no scroll-driven animations ---------- */
+  .no-sda .in,
+  .no-sda .step {
+    opacity: 0;
+    translate: 0 120px;
+    scale: 0.9;
+    transition: opacity 0.5s ease, translate 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), scale 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 0.45s, box-shadow 0.45s;
+  }
+  .no-sda .sfx {
+    opacity: 0;
+    scale: 2.6;
+    rotate: -10deg;
+    transition: opacity 0.3s, scale 0.45s cubic-bezier(0.3, 1.4, 0.5, 1), rotate 0.45s;
+  }
+  .no-sda .pop {
+    animation: none;
+    opacity: 0;
+    scale: 0.3;
+    transition: opacity 0.25s, scale 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+  .no-sda .char-in {
+    opacity: 0;
+    translate: 0 45%;
+    transition: opacity 0.5s, translate 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .no-sda .fx-on {
+    opacity: 1;
+    translate: none;
+    scale: none;
+    rotate: none;
+  }
+  .no-sda .par {
+    translate: 0 var(--par-y, 0);
+  }
+  /* Cover choreography, driven by --p (0→1) set from scroll position. */
+  .no-sda .cv-a {
+    transform: translate(calc(var(--p, 0) * -60%), calc(var(--p, 0) * -20%)) rotate(calc(var(--p, 0) * -12deg));
+    opacity: calc(1 - var(--p, 0));
+  }
+  .no-sda .cv-b {
+    transform: translate(calc(var(--p, 0) * 60%), calc(var(--p, 0) * 30%)) rotate(calc(var(--p, 0) * 10deg));
+    opacity: calc(1 - var(--p, 0));
+  }
+  .no-sda .cv-t {
+    transform: scale(calc(1 + var(--p, 0) * 0.8));
+    opacity: calc(1 - var(--p, 0));
+    letter-spacing: calc(var(--p, 0) * 0.3em);
+  }
+  .no-sda .cv-h {
+    transform: translateY(calc(var(--p, 0) * -10%)) scale(calc(1 + var(--p, 0) * 0.35));
+  }
+
+  /* ---------- 5. cursor + mobile performance ---------- */
+  @media (pointer: fine) {
+    html {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M28 2 L14 18 L18 22 Z' fill='%23111'/%3E%3Cpath d='M14 18 L18 22 C16 27 10 30 3 29 C6 27 7 24 9 21 C10 19 12 18 14 18 Z' fill='%236B2BD9' stroke='%23111' stroke-width='1.5'/%3E%3C/svg%3E") 3 29, auto;
+    }
+  }
+  @media (max-width: 700px) {
+    /* Still speed lines on phones: the rotating layers are large and repaint-heavy. */
+    .spinlines,
+    .rush {
+      animation: none !important;
+      will-change: auto;
+    }
+  }
+}
+
+@keyframes peel {
+  from { --t: 0; }
+  to { --t: 1; }
+}
+@keyframes shake {
+  0%, 100% { translate: 0 0; }
+  20% { translate: -7px 3px; }
+  40% { translate: 6px -4px; }
+  60% { translate: -4px 2px; }
+  80% { translate: 3px -1px; }
+}

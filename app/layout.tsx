@@ -1,73 +1,95 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "next-themes";
-import "./globals.css";
+import type { Metadata, Viewport } from 'next';
+import { Space_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
+import { ScrollFx } from '@/components/fx/ScrollFx';
+import { SiteHeader } from '@/components/layout/SiteHeader';
+import { SvgDefs } from '@/components/manga/SvgDefs';
+import { getPersonal, getSite } from '@/lib/content';
+import './globals.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Japanese-capable fonts are glyph subsets (see scripts/subset-fonts.mjs, `npm run fonts`).
+const dela = localFont({
+  src: './fonts/dela-gothic-one-400.woff2',
+  weight: '400',
+  variable: '--font-dela',
+  display: 'swap',
 });
+const zen = localFont({
+  src: [
+    { path: './fonts/zen-kaku-gothic-new-400.woff2', weight: '400' },
+    { path: './fonts/zen-kaku-gothic-new-700.woff2', weight: '700' },
+  ],
+  variable: '--font-zen',
+  display: 'swap',
+});
+const mono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-space-mono', display: 'swap' });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const personal = getPersonal();
+const site = getSite();
+const title = `${personal.name} | ${personal.title}`;
 
 export const metadata: Metadata = {
-  title: "Shubham Kumar | Full Stack Developer",
-  description: "Full Stack Developer crafting seamless digital experiences from stunning frontends to powerful backends. Specializing in React, Next.js, Spring Boot, and modern web technologies.",
-  keywords: ["Full Stack Developer", "Web Developer", "React", "Next.js", "Spring Boot", "Portfolio", "Shubham Kumar"],
-  authors: [{ name: "Shubham Kumar" }],
-  creator: "Shubham Kumar",
-  manifest: "/manifest.json",
+  metadataBase: new URL(site.url),
+  title: { default: title, template: `%s | ${personal.name}` },
+  description: personal.description,
+  keywords: ['Full Stack Developer', 'Web Developer', 'React', 'Kotlin', 'Java', 'Portfolio', personal.name],
+  authors: [{ name: personal.name }],
+  creator: personal.name,
+  manifest: '/manifest.json',
   icons: {
     icon: [
-      { url: "/favicon.png", type: "image/png" },
-      { url: "/favicon.ico", sizes: "any" }
+      { url: '/favicon.png', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png", type: "image/png" }
-    ],
+    apple: [{ url: '/apple-touch-icon.png', type: 'image/png' }],
   },
   openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://portfolio-shubham-seven.vercel.app/",
-    title: "Shubham Kumar | Full Stack Developer",
-    description: "Full Stack Developer crafting seamless digital experiences from stunning frontends to powerful backends.",
-    siteName: "Shubham Kumar Portfolio",
-    images: [
-      {
-        url: "/preview.PNG",
-        width: 1200,
-        height: 630,
-        alt: "Shubham Kumar Portfolio Preview",
-      },
-    ],
+    type: 'website',
+    locale: 'en_US',
+    url: '/',
+    title,
+    description: personal.description,
+    siteName: `${personal.name} Portfolio`,
+    images: [{ url: '/preview.jpg', width: 1200, height: 630, alt: `${personal.name} portfolio preview` }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Shubham Kumar | Full Stack Developer",
-    description: "Full Stack Developer crafting seamless digital experiences from stunning frontends to powerful backends.",
-    images: ["/preview.PNG"],
+    card: 'summary_large_image',
+    title,
+    description: personal.description,
+    images: ['/preview.jpg'],
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  themeColor: '#0A0607',
+  colorScheme: 'dark light',
+};
+
+/**
+ * Runs before first paint: Night is the default (server-rendered class),
+ * so only a saved "day" choice needs undoing. Keep the key in sync with ModeToggle.
+ */
+const MODE_SCRIPT = `try{if(localStorage.getItem('mode')==='day')document.documentElement.classList.remove('night')}catch(e){}`;
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased transition-colors duration-500`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
+    <html lang="en" className={`night ${dela.variable} ${zen.variable} ${mono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: MODE_SCRIPT }} />
+      </head>
+      <body>
+        <a
+          href="#content"
+          className="sr-only z-50 bg-ink px-4 py-3 font-mono text-fg-inv focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
         >
+          Skip to content
+        </a>
+        <SvgDefs />
+        <SiteHeader />
+        <main id="content" className="overflow-clip bg-page text-fg">
           {children}
-        </ThemeProvider>
+        </main>
+        <ScrollFx />
       </body>
     </html>
   );
