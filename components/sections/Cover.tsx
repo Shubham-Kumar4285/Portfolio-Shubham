@@ -1,13 +1,17 @@
 import Link from 'next/link';
+import { preload } from 'react-dom';
 import { Hero } from '@/components/manga/Hero';
 import { Ed } from '@/components/manga/Ed';
 import { Bubble, Burst, Ruins, ScreenTone, SpeedLines } from '@/components/manga/primitives';
+import { RONIN } from '@/components/sprite/sheets';
 import { edition, getPersonal } from '@/lib/content';
 
 const titleSize = 'font-display text-[clamp(44px,13vw,210px)] leading-none -skew-x-[8deg]';
 
 /** Sticky, scroll-choreographed cover. The character sits between two title layers. */
 export function Cover() {
+  // The character sheet is a CSS background, so tell the browser about it up front.
+  preload(RONIN.src, { as: 'image', fetchPriority: 'high' });
   const { shortName, title } = getPersonal();
   const b0 = edition('b0');
   const name = shortName.toUpperCase();
@@ -48,7 +52,7 @@ export function Cover() {
           {/* character */}
           <div className="cv-h m-hero absolute bottom-0 left-1/2 ml-[calc(min(46vw,560px)/-2)] h-[92%] w-[min(46vw,560px)] origin-bottom">
             <div className="load-rise h-full w-full">
-              <Hero pose="cover" label="Original manga character: a hooded developer with a scarf and a glowing blade" />
+              <Hero pose="cover" label="Pixel-art ronin developer with a katana on his shoulder" />
             </div>
           </div>
 

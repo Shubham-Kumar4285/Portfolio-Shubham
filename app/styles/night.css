@@ -105,12 +105,6 @@ html.night {
 .night .ruins [fill="#111"] {
   fill: #7a1c24;
 }
-.night .hero svg {
-  filter: drop-shadow(0 0 1.5px #f2e9e4) drop-shadow(0 0 10px #c8102e);
-}
-.night .c-eyes path {
-  stroke: #ff2a3d;
-}
 .night .moon {
   display: block;
 }

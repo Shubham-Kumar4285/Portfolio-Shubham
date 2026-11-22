@@ -19,7 +19,8 @@ export function CharacterPanel({
 }) {
   return (
     <Panel step={step} className={cx('relative overflow-hidden border-[5px] border-line', className)}>
-      <Ruins />
+      {/* Walking: the ground scrolls under him. */}
+      <Ruins moving={pose === 'dash'} />
       {/* Night Edition: a red slash cuts across the panel. */}
       <div aria-hidden="true" className="slash" />
       <div className="char-in absolute inset-[8%_4%_0]">

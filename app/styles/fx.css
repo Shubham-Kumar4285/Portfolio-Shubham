@@ -178,3 +178,124 @@
   60% { translate: -4px 2px; }
   80% { translate: 3px -1px; }
 }
+
+/* ---------- sprite sheets (components/sprite) ---------- */
+.sprite-sheet {
+  display: block;
+  background-repeat: no-repeat;
+  background-position-x: 0%;
+  image-rendering: pixelated;
+  animation-name: sprite-play;
+}
+/*
+ * Pixel art only looks crisp when every art pixel covers the same number of screen
+ * pixels, so snap the sprite's height down to a whole multiple of the frame height
+ * (half steps on 2× screens, which are still whole device pixels).
+ */
+@supports (height: round(down, 100%, 1px)) {
+  .sprite-sheet {
+    height: max(calc(var(--fh) / 2), round(down, 100%, var(--fh)));
+  }
+  @media (min-resolution: 2dppx) {
+    .sprite-sheet {
+      height: max(calc(var(--fh) / 2), round(down, 100%, calc(var(--fh) / 2)));
+    }
+  }
+}
+@keyframes sprite-play {
+  to {
+    background-position-x: var(--sprite-end);
+  }
+}
+
+/* ---------- sprite particles (components/sprite/Embers) ---------- */
+:root {
+  --ember: 139 92 246; /* day: violet, matches the accent + his scarf */
+}
+html.night {
+  --ember: 255 42 66; /* night: blood red */
+}
+.sprite-sheet.glow {
+  filter: drop-shadow(0 0 10px rgb(var(--ember) / 0.35));
+}
+.embers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; /* behind the sprite (z-index 1) */
+}
+.embers i {
+  position: absolute;
+  display: block;
+  width: var(--s, 3px);
+  height: var(--s, 3px);
+  background: rgb(var(--ember));
+  box-shadow: 0 0 6px rgb(var(--ember) / 0.8);
+}
+.ember {
+  left: var(--x);
+  bottom: var(--y);
+  opacity: 0;
+  animation: ember-rise var(--d) linear var(--delay) infinite;
+}
+/* glowing pixel traces under his feet */
+.embers .ember-floor {
+  left: 22%;
+  right: 22%;
+  bottom: 3%;
+  width: auto;
+  height: 3px;
+  opacity: 0.45;
+  background: linear-gradient(90deg, transparent, rgb(var(--ember)) 20% 45%, transparent 50%, rgb(var(--ember)) 60% 85%, transparent);
+  box-shadow: none;
+}
+.ember-burst .spark {
+  left: 50%;
+  top: 55%;
+  opacity: 0;
+  animation: spark-burst 0.6s cubic-bezier(0.2, 0.8, 0.3, 1) var(--delay) both;
+}
+@keyframes ember-rise {
+  0% { transform: translate(0, 0); opacity: 0; }
+  15% { opacity: var(--a); }
+  80% { opacity: var(--a); }
+  100% { transform: translate(var(--dx), calc(var(--rise) * -1)); opacity: 0; }
+}
+@keyframes spark-burst {
+  0% { transform: translate(0, 0) scale(1.4); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.5); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ember { opacity: 0.4; }
+}
+
+/* ---------- moving ground (Ruins moving) ---------- */
+/* Fixed-size tiles so the scroll speed matches his stride whatever the panel width. */
+.ruins-track {
+  --tile: 600px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  display: flex;
+  width: calc(var(--tile) * 6);
+  height: 45%;
+  animation: ground-scroll 8s linear infinite;
+  will-change: transform;
+}
+.ruins-track svg {
+  flex: 0 0 var(--tile);
+  height: 100%;
+}
+.ruins-track svg:nth-child(even) {
+  transform: scaleX(-1);
+}
+/* He walks to the right, so the ground slides left; one period = two tiles (art + mirror). */
+@keyframes ground-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(var(--tile) * -2)); }
+}
+/* He stops to attack: freeze the ground until he walks again. */
+.panel:has(.sprite-sheet[data-anim='slash']) .ruins-track {
+  animation-play-state: paused;
+}

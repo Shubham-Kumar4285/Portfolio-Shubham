@@ -29,7 +29,7 @@ npm test           # jest
 
 ```
 app/
-  layout.tsx               fonts, metadata, header, shared SVG defs
+  layout.tsx               fonts, metadata, header
   page.tsx                 home: cover + chapters
   missions/[slug]/page.tsx case file per project (SSG)
   not-found.tsx            manga 404
@@ -37,16 +37,19 @@ app/
   styles/manga.css         manga primitives, keyframes, scroll timelines, mobile rules
   fonts/                   subset WOFF2 files (generated)
 components/
-  manga/                   design system: Hero (character + poses), Panel, Bubble, Caption,
+  manga/                   design system: Hero (the sprite character), Panel, Bubble, Caption,
                            Burst, Sfx, SpeedLines, Ruins, CharacterPanel, PageTurn, ChapterHeading, buttons
   layout/SiteHeader.tsx
   sections/                Cover, Origin, Awakening, Missions, Finale
   missions/                MissionFeature, MissionCard, MissionShot
+  sprite/                  SpriteAnimation (CSS steps() player), SpriteActor, Embers, sheets.ts
 lib/
   types.ts                 content types
   content.ts               typed accessors over data/portfolio.json
 data/portfolio.json        all copy and content
 scripts/subset-fonts.mjs   regenerates app/fonts
+scripts/slice-sprite.py    cleans a raw sprite sheet into public/sprites/*.webp
+public/sprites/ronin.webp  the character: 6 frames × idle / walk / slash / jump
 ```
 
 ## Reading effects
@@ -62,7 +65,7 @@ Effect styles live in `app/styles/fx.css`.
 
 The site ships two editions of the volume. **Night** (black paper, bone ink, blood-red accent) is the default. The **☀ DAY EDITION** button switches to the original paper look, and the choice is remembered in `localStorage` under `mode`.
 
-- **Colours are role tokens** (`paper`, `sheet`, `ink`, `line`, `fg`, `fg-inv`, `accent`, `shadow`, `letter-*`) in `app/globals.css`. `app/styles/night.css` remaps them under `html.night` and adds the night-only pieces: the moon, the slashes, the character glow and the red eyes. Use the tokens instead of hex values so new components follow both editions.
+- **Colours are role tokens** (`paper`, `sheet`, `ink`, `line`, `fg`, `fg-inv`, `accent`, `shadow`, `letter-*`) in `app/globals.css`. `app/styles/night.css` remaps them under `html.night` and adds the night-only pieces: the moon and the slashes. The character's embers and glow use `--ember` (in `styles/fx.css`): violet by day, red at night. Use the tokens instead of hex values so new components follow both editions.
 - **Copy that differs** lives in `data/portfolio.json` → `editions.day` / `editions.night`. Render it with `<Ed k="…" />`, or pass `night` to `Bubble` / `nightBubble` to `CharacterPanel`. Both versions are in the HTML; CSS shows the active one.
 - A one-line script in `<head>` applies a saved Day choice before first paint, so the wrong theme never flashes.
 - Switching plays a ~2s cinematic transition (`app/styles/cine.css`): letterbox bars, a moon or sun, a slash, and a title. The title comes from `editions.*.cineWord` / `cineSub`. The edition flips at 1s with a page shake. With reduced motion it switches instantly.

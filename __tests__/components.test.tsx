@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Hero } from '@/components/manga/Hero';
+import { RONIN } from '@/components/sprite/sheets';
 import { Bubble, EditionText, Panel } from '@/components/manga/primitives';
 import { ModeToggle } from '@/components/layout/ModeToggle';
 import { fireEvent } from '@testing-library/react';
@@ -10,16 +11,44 @@ import { getProjects, getSkills, getSocial } from '@/lib/content';
 import { ContactForm } from '@/components/sections/ContactForm';
 
 describe('Hero', () => {
-  it.each(['cover', 'think', 'strike', 'dash', 'end'] as const)('applies the %s pose class', (pose) => {
+  it.each([
+    ['cover', 'idle'],
+    ['think', 'idle'],
+    ['strike', 'slash'],
+    ['dash', 'walk'],
+    ['end', 'idle'],
+  ] as const)('plays the right animation for the %s pose', (pose, anim) => {
     const { container } = render(<Hero pose={pose} />);
-    expect(container.firstChild).toHaveClass(`pose-${pose}`);
+    expect(container.querySelector('.sprite-sheet')).toHaveAttribute('data-anim', anim);
+  });
+
+  it('plays the sprite row for its pose', () => {
+    const { container } = render(<Hero pose="dash" />);
+    const sprite = container.querySelector('.sprite-sheet') as HTMLElement;
+    expect(sprite.style.backgroundImage).toContain('/sprites/ronin.webp');
+    expect(sprite.style.backgroundPositionY).toBe(`${(RONIN.animations.walk.row * 100) / (RONIN.rows - 1)}%`);
+    expect(container.querySelectorAll('.ember').length).toBeGreaterThan(0);
   });
 
   it('is decorative unless labelled', () => {
     const { container, rerender } = render(<Hero pose="cover" />);
-    expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+    expect(container.querySelector('.sprite-sheet')).toHaveAttribute('aria-hidden', 'true');
     rerender(<Hero pose="cover" label="The hero" />);
     expect(screen.getByRole('img', { name: 'The hero' })).toBeInTheDocument();
+  });
+
+  it('strikes when its panel is hovered, then returns to its loop', () => {
+    const { container } = render(
+      <div className="panel">
+        <Hero pose="think" />
+      </div>,
+    );
+    fireEvent.mouseEnter(container.firstChild as HTMLElement);
+    const sprite = container.querySelector('.sprite-sheet') as HTMLElement;
+    expect(sprite.style.backgroundPositionY).toBe(`${(RONIN.animations.slash.row * 100) / (RONIN.rows - 1)}%`);
+    expect(container.querySelectorAll('.spark').length).toBe(12);
+    fireEvent.animationEnd(sprite);
+    expect((container.querySelector('.sprite-sheet') as HTMLElement).style.backgroundPositionY).toBe('0%');
   });
 });
 

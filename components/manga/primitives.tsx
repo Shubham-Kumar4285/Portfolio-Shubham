@@ -144,15 +144,9 @@ export function ScreenTone({ className }: { className?: string }) {
   return <div aria-hidden="true" className={cx('tone-lt absolute inset-0', className)} />;
 }
 
-/** Ink "ruins" landscape sketched along the bottom of a panel. */
-export function Ruins() {
+function RuinsArt({ className }: { className?: string }) {
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 400 300"
-      preserveAspectRatio="none"
-      className="ruins absolute inset-x-0 bottom-0 z-0 h-[45%] w-full"
-    >
+    <svg aria-hidden="true" viewBox="0 0 400 300" preserveAspectRatio="none" className={className}>
       <g fill="none" stroke="#111" strokeWidth="2">
         <path d="M0 120 L70 110 L120 140 L190 118 L260 150 L330 128 L400 140" />
         <path d="M0 200 L60 190 L110 230 L180 205 L240 240 L320 215 L400 235" />
@@ -164,6 +158,22 @@ export function Ruins() {
         <path d="M10 260 L40 255 M20 270 L50 266 M300 270 L340 262 M310 282 L350 276 M200 280 L230 276" />
       </g>
     </svg>
+  );
+}
+
+/**
+ * Ink "ruins" landscape sketched along the bottom of a panel.
+ * `moving` scrolls it sideways (the character walks in place while the ground slides by):
+ * tiles alternate with mirrored copies so the edges always meet seamlessly.
+ */
+export function Ruins({ moving = false }: { moving?: boolean }) {
+  if (!moving) return <RuinsArt className="ruins absolute inset-x-0 bottom-0 z-0 h-[45%] w-full" />;
+  return (
+    <div aria-hidden="true" className="ruins ruins-track">
+      {Array.from({ length: 6 }, (_, i) => (
+        <RuinsArt key={i} />
+      ))}
+    </div>
   );
 }
 

@@ -3,7 +3,6 @@ import { Space_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import { ScrollFx } from '@/components/fx/ScrollFx';
 import { SiteHeader } from '@/components/layout/SiteHeader';
-import { SvgDefs } from '@/components/manga/SvgDefs';
 import { getPersonal, getSite } from '@/lib/content';
 import './globals.css';
 
@@ -84,7 +83,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to content
         </a>
-        <SvgDefs />
         <SiteHeader />
         <main id="content" className="overflow-clip bg-page text-fg">
           {children}
