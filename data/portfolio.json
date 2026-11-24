@@ -10,7 +10,8 @@
     "description": "Full Stack Developer crafting seamless digital experiences, from stunning frontends to powerful backends.",
     "location": "Ghaziabad",
     "yearsExp": "",
-    "email": ""
+    "email": "",
+    "resume": "/Shubham-Kumar-Resume.pdf"
   },
   "origin": {
     "caption": "It started with curiosity. A blank editor. One stubborn bug.",
@@ -58,6 +59,55 @@
       "name": "SQL",
       "tag": "DATA",
       "level": 75
+    }
+  ],
+  "experience": [
+    {
+      "role": "SDE",
+      "company": "Avalon Information Systems",
+      "period": "Jul 2026 – Present",
+      "summary": "Leading the rebuild of a legacy ETL platform on a modern Python + Next.js stack.",
+      "highlights": [
+        "Rebuilt an ETL platform from scratch with FastAPI and Next.js, replacing a legacy PHP system",
+        "Built background jobs and scheduling with Celery, Redis, and Celery Beat"
+      ],
+      "tags": [
+        "FastAPI",
+        "Next.js",
+        "Celery",
+        "Redis",
+        "Python"
+      ]
+    },
+    {
+      "role": "SDE Intern",
+      "company": "Avalon Information Systems",
+      "period": "Jan 2026 – Jul 2026",
+      "summary": "Owned the frontend architecture of the DFA Visualizer.",
+      "highlights": [
+        "Designed and implemented the frontend architecture for DFA Visualizer using Next.js",
+        "Developed interactive, state-driven UI components and integrated RESTful APIs to support real-time visualization and seamless data flow"
+      ],
+      "tags": [
+        "Next.js",
+        "React",
+        "REST APIs"
+      ]
+    },
+    {
+      "role": "SDE Intern",
+      "company": "NextBigE",
+      "period": "Nov 2025 – Dec 2025",
+      "summary": "Worked on image processing and ML workflows for visual data pipelines.",
+      "highlights": [
+        "Contributed to image processing and ML workflows for visual data pipelines using Python and OpenCV",
+        "Built spot channel automation, reducing manual effort and improving workflow efficiency"
+      ],
+      "tags": [
+        "Python",
+        "OpenCV",
+        "Machine Learning"
+      ]
     }
   ],
   "projects": [

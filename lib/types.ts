@@ -15,6 +15,8 @@ export interface Personal {
   yearsExp: string;
   /** Leave empty to point the contact button at the first social link. */
   email: string;
+  /** Path to a PDF in /public (e.g. "/resume.pdf"). Leave empty to hide the RESUME buttons. */
+  resume: string;
 }
 
 export interface Origin {
@@ -46,6 +48,20 @@ export interface Project {
   image: string;
   repo: string;
   live?: string;
+}
+
+export interface Experience {
+  role: string;
+  company: string;
+  /** Free text, e.g. "Jun 2024 – Present". */
+  period: string;
+  location?: string;
+  /** Optional company site. */
+  url?: string;
+  summary: string;
+  /** What you did / shipped, one line each. */
+  highlights: string[];
+  tags: string[];
 }
 
 export interface Social {
@@ -91,6 +107,8 @@ export interface Portfolio {
   personal: Personal;
   origin: Origin;
   skills: Skill[];
+  /** Newest first. Leave empty to hide the Experience chapter. */
+  experience: Experience[];
   projects: Project[];
   social: Social[];
   contact: Contact;

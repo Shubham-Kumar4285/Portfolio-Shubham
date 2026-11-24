@@ -1,6 +1,8 @@
 import {
   getContact,
   getEditions,
+  getExperience,
+  getPersonal,
   getAdjacentProjects,
   getProject,
   getProjects,
@@ -58,5 +60,17 @@ describe('content loader', () => {
       expect(day[k]).toBeTruthy();
       expect(night[k]).toBeTruthy();
     }
+  });
+
+  it('gives every experience entry the fields the chapter renders', () => {
+    for (const job of getExperience()) {
+      expect(job.role && job.company && job.period && job.summary).toBeTruthy();
+      expect(Array.isArray(job.highlights) && Array.isArray(job.tags)).toBe(true);
+    }
+  });
+
+  it('points the resume at a PDF in /public, or leaves it empty', () => {
+    const { resume } = getPersonal();
+    if (resume) expect(resume).toMatch(/^\/.+\.pdf$/i);
   });
 });

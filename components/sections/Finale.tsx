@@ -1,20 +1,20 @@
 import { CharacterPanel } from '@/components/manga/layout';
 import { Caption, Panel, SpeedLines } from '@/components/manga/primitives';
 import { Ed } from '@/components/manga/Ed';
-import { edition, getContact, getPersonal, getSite, getSocial } from '@/lib/content';
+import { chapterShift, edition, getContact, getPersonal, getSite, getSocial } from '@/lib/content';
 import { ContactForm } from './ContactForm';
 
 const smallButton = 'border-[3px] border-line bg-sheet px-4 py-2.5 font-mono text-sm font-bold no-underline';
 
 export function Finale() {
   const social = getSocial();
-  const { email } = getPersonal();
+  const { email, resume } = getPersonal();
   const { formspreeId } = getContact();
 
   return (
     <section
       id="ch4"
-      data-page="5"
+      data-page={5 + chapterShift()}
       className="scene relative box-border min-h-[90vh] overflow-clip bg-ink px-[4vw] pt-[90px] pb-[120px] text-fg-inv"
     >
       <SpeedLines spin className="-inset-[80%] opacity-[.12] invert" />
@@ -42,6 +42,11 @@ export function Finale() {
             {email && (
               <a href={`mailto:${email}`} className={smallButton}>
                 EMAIL
+              </a>
+            )}
+            {resume && (
+              <a href={resume} download className={smallButton}>
+                RESUME ↓
               </a>
             )}
             {social.map((s) => (

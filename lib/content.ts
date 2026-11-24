@@ -7,6 +7,9 @@ export const getSite = () => portfolio.site;
 export const getPersonal = () => portfolio.personal;
 export const getOrigin = () => portfolio.origin;
 export const getSkills = () => portfolio.skills;
+export const getExperience = () => portfolio.experience;
+/** 1 when the Experience chapter is shown: Missions and later chapters move down a page. */
+export const chapterShift = () => (portfolio.experience.length ? 1 : 0);
 export const getProjects = () => portfolio.projects;
 export const getSocial = () => portfolio.social;
 export const getEditions = () => portfolio.editions;

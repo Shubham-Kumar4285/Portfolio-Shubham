@@ -9,6 +9,9 @@ import { Finale } from '@/components/sections/Finale';
 import { Awakening } from '@/components/sections/Awakening';
 import { getProjects, getSkills, getSocial } from '@/lib/content';
 import { ContactForm } from '@/components/sections/ContactForm';
+import { Experience } from '@/components/sections/Experience';
+import { SiteHeader } from '@/components/layout/SiteHeader';
+import data from '@/data/portfolio.json';
 
 describe('Hero', () => {
   it.each([
@@ -196,5 +199,59 @@ describe('Night Edition', () => {
     expect(cine).not.toHaveClass('go');
     expect(container.querySelector('main')).not.toHaveClass('cine-shake');
     jest.useRealTimers();
+  });
+});
+
+/** Swap a slice of the content file for one test; the loader reads this same object. */
+function withData<K extends 'experience' | 'personal'>(key: K, value: (typeof data)[K] | object) {
+  const saved = data[key];
+  (data as Record<string, unknown>)[key] = value;
+  return () => ((data as Record<string, unknown>)[key] = saved);
+}
+
+describe('Experience', () => {
+  let restore = () => {};
+  afterEach(() => restore());
+  const job = {
+    role: 'Software Engineer',
+    company: 'Acme',
+    period: '2024 – Present',
+    summary: 'Built things.',
+    highlights: ['Shipped a feature'],
+    tags: ['React'],
+  };
+
+  it('renders nothing without experience', () => {
+    restore = withData('experience', []);
+    const { container } = render(<Experience />);
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it('renders one arc per role', () => {
+    restore = withData('experience', [job, { ...job, company: 'Globex', period: '2023' }]);
+    render(<Experience />);
+    expect(screen.getByRole('heading', { name: 'EXPERIENCE' })).toBeInTheDocument();
+    expect(screen.getAllByRole('article')).toHaveLength(2);
+    expect(screen.getByText('ARC 02')).toBeInTheDocument();
+    expect(screen.getAllByText('Shipped a feature')).toHaveLength(2);
+  });
+});
+
+describe('SiteHeader resume button', () => {
+  let restore = () => {};
+  afterEach(() => restore());
+
+  it('downloads the resume when one is set', () => {
+    restore = withData('personal', { ...data.personal, resume: '/resume.pdf' });
+    render(<SiteHeader />);
+    const link = screen.getByRole('link', { name: /download resume/i });
+    expect(link).toHaveAttribute('href', '/resume.pdf');
+    expect(link).toHaveAttribute('download');
+  });
+
+  it('hides the button when no resume is set', () => {
+    restore = withData('personal', { ...data.personal, resume: '' });
+    render(<SiteHeader />);
+    expect(screen.queryByRole('link', { name: /download resume/i })).toBeNull();
   });
 });

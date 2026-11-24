@@ -1,16 +1,17 @@
 import { MissionCard, MissionFeature } from '@/components/missions/MissionCards';
 import { ChapterHeading, CharacterPanel } from '@/components/manga/layout';
 import { Panel, Sfx } from '@/components/manga/primitives';
-import { edition, getProjects, missionNumber } from '@/lib/content';
+import { chapterShift, edition, getProjects, missionNumber } from '@/lib/content';
 
 export function Missions() {
   const [feature, ...rest] = getProjects();
+  const shift = chapterShift();
 
   return (
-    <section id="ch3" data-page="4" className="scene relative overflow-hidden bg-sheet px-[4vw] pt-[70px] pb-[90px]">
+    <section id="ch3" data-page={4 + shift} className="scene relative overflow-hidden bg-sheet px-[4vw] pt-[70px] pb-[90px]">
       <div aria-hidden="true" className="hlines rush absolute inset-y-0 left-0 -right-[200px] opacity-[.06]" />
       <div className="relative">
-        <ChapterHeading label="CHAPTER 03" title="MISSIONS" kanji="任務" />
+        <ChapterHeading label={`CHAPTER 0${3 + shift}`} title="MISSIONS" kanji="任務" />
 
         <div className="mb-3.5 flex flex-wrap gap-3.5">
           <CharacterPanel
